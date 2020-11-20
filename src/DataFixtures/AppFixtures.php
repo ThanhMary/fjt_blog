@@ -5,12 +5,12 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\Article;
 use App\Entity\Category;
 use App\Entity\Comment;
 use App\Entity\Interaction;
-use Faker\Factory;
 
 
 class AppFixtures extends Fixture
