@@ -24,7 +24,7 @@ class Article
     /**
      * @ORM\Column(type="datetime")
      */
-    private $creation_date;
+    private $creationDate;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -54,7 +54,7 @@ class Article
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $picture_path;
+    private $picturePath;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="article_id")
@@ -79,12 +79,12 @@ class Article
 
     public function getCreationDate(): ?\DateTimeInterface
     {
-        return $this->creation_date;
+        return $this->creationDate;
     }
 
-    public function setCreationDate(\DateTimeInterface $creation_date): self
+    public function setCreationDate(\DateTimeInterface $creationDate): self
     {
-        $this->creation_date = $creation_date;
+        $this->creationDate = $creationDate;
 
         return $this;
     }
@@ -151,12 +151,12 @@ class Article
 
     public function getPicturePath(): ?string
     {
-        return $this->picture_path;
+        return $this->picturePath;
     }
 
-    public function setPicturePath(?string $picture_path): self
+    public function setPicturePath(?string $picturePath): self
     {
-        $this->picture_path = $picture_path;
+        $this->picturePath = $picturePath;
 
         return $this;
     }

@@ -30,9 +30,18 @@ class AppFixtures extends Fixture
         $user
             ->setFirstname('userfirst')
             ->setLastname('userlast ')
-            ->setEmail('axel@gmail.com')
+            ->setEmail('user@gmail.com')
             ->setPassword($this->encoder->encodePassword($user, 'user'))
             ->setRoles(['ROLE_USER']);
+        $manager->persist($user);
+
+        $user = new User();
+        $user
+            ->setFirstname('userfirst')
+            ->setLastname('userlast ')
+            ->setEmail('admin@gmail.com')
+            ->setPassword($this->encoder->encodePassword($user, 'admin'))
+            ->setRoles(['ROLE_ADMIN']);
         $manager->persist($user);
         $manager->flush();
 
@@ -49,9 +58,9 @@ class AppFixtures extends Fixture
             $article
                 ->setCreationDate($faker->dateTimeBetween('-6 month', '+6 month', 'Europe/Paris'))
                 ->setState($i % 2 == 0 ? $article::VISIBLE : $article::HIDDEN)
-                ->setTitle($faker->text(150))
-                ->setSubtitle($faker->realText(250))
-                ->setContent($faker->realText(500))
+                ->setTitle($faker->text(20))
+                ->setSubtitle($faker->realText(30))
+                ->setContent($faker->realText(400))
                 ->setPicturePath($faker->imageUrl())
                 ->setCategory($i % 2 == 0 ? $cat_sport : $cat_politique);
             $manager->persist($article);
