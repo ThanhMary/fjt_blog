@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="1acb8705-703c-4460-83c2-a4428daa076d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Axel_TODO.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/Axel_TODO.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Category.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,9 +121,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/maker-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/phpunit-bridge" />
       <path value="$PROJECT_DIR$/vendor/symfony/web-profiler-bundle" />
-      <path value="$PROJECT_DIR$/vendor/fzaninotto/faker" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/data-fixtures" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-fixtures-bundle" />
     </include_path>
   </component>
   <component name="ProjectId" id="1kViROfIny4m0JgdV5V1uDZaZwT" />
@@ -158,17 +157,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1605792150244</updated>
+<<<<<<< HEAD
       <workItem from="1605792152787" duration="4395000" />
+=======
+      <workItem from="1605792152787" duration="2905000" />
+>>>>>>> 24819b94afe57794b704064b5c79b783b9af3ed1
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="2536" y="243" key="run.anything.popup" timestamp="1605796911277">
-      <screen x="1920" y="0" width="1920" height="1050" />
-    </state>
-    <state x="2536" y="243" key="run.anything.popup/0.0.1536.834/1920.0.1920.1050@1920.0.1920.1050" timestamp="1605796911277" />
   </component>
 </project>
