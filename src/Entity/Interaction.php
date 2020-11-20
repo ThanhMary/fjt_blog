@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Interaction
 {
+    public const LIKE = 0;
+    public const SHARE = 1;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -26,13 +29,13 @@ class Interaction
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="interactions")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user_id;
+    private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="interactions")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $article_id;
+    private $article;
 
     public function getId(): ?int
     {
@@ -51,26 +54,26 @@ class Interaction
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?User
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?User $user_id): self
+    public function setUser(?User $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getArticleId(): ?Article
+    public function getArticle(): ?Article
     {
-        return $this->article_id;
+        return $this->article;
     }
 
-    public function setArticleId(?Article $article_id): self
+    public function setArticle(?Article $article): self
     {
-        $this->article_id = $article_id;
+        $this->article = $article;
 
         return $this;
     }

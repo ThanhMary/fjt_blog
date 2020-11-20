@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Article
 {
+    public const HIDDEN = 0;
+    public const VISIBLE = 1;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -47,17 +49,12 @@ class Article
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
      */
-    private $category_id;
+    private $category;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $picture_path;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $date;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="article_id")
@@ -140,14 +137,14 @@ class Article
         return $this;
     }
 
-    public function getCategoryId(): ?Category
+    public function getCategory(): ?Category
     {
-        return $this->category_id;
+        return $this->category;
     }
 
-    public function setCategoryId(?Category $category_id): self
+    public function setCategory(?Category $category): self
     {
-        $this->category_id = $category_id;
+        $this->category = $category;
 
         return $this;
     }
@@ -164,18 +161,6 @@ class Article
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Comment[]
      */
@@ -188,7 +173,7 @@ class Article
     {
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
-            $comment->setArticleId($this);
+            $comment->setArticle($this);
         }
 
         return $this;
@@ -198,8 +183,8 @@ class Article
     {
         if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getArticleId() === $this) {
-                $comment->setArticleId(null);
+            if ($comment->getArticle() === $this) {
+                $comment->setArticle(null);
             }
         }
 
@@ -218,7 +203,7 @@ class Article
     {
         if (!$this->interactions->contains($interaction)) {
             $this->interactions[] = $interaction;
-            $interaction->setArticleId($this);
+            $interaction->setArticle($this);
         }
 
         return $this;
@@ -228,8 +213,8 @@ class Article
     {
         if ($this->interactions->removeElement($interaction)) {
             // set the owning side to null (unless already changed)
-            if ($interaction->getArticleId() === $this) {
-                $interaction->setArticleId(null);
+            if ($interaction->getArticle() === $this) {
+                $interaction->setArticle(null);
             }
         }
 

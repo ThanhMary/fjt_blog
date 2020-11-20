@@ -10,6 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Comment
 {
+    public const SEND = 0;
+    public const WAITING_FOR_MODERATION = 1;
+    public const VALIDE = 2;
+    public const DELETED = 3;
+    public const MODERATED = 3;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -36,13 +42,13 @@ class Comment
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user_id;
+    private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $article_id;
+    private $article;
 
     public function getId(): ?int
     {
@@ -85,26 +91,26 @@ class Comment
         return $this;
     }
 
-    public function getUseId(): ?User
+    public function getUser(): ?User
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUseId(?User $user_id): self
+    public function setUser(?User $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getArticleId(): ?Article
+    public function getArticle(): ?Article
     {
-        return $this->article_id;
+        return $this->article;
     }
 
-    public function setArticleId(?Article $article_id): self
+    public function setArticle(?Article $article): self
     {
-        $this->article_id = $article_id;
+        $this->article = $article;
 
         return $this;
     }
