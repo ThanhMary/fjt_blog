@@ -194,7 +194,7 @@ class User implements UserInterface
     {
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
-            $comment->setUseId($this);
+            $comment->setUser($this);
         }
 
         return $this;
@@ -204,8 +204,8 @@ class User implements UserInterface
     {
         if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getUseId() === $this) {
-                $comment->setUseId(null);
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
             }
         }
 
@@ -224,7 +224,7 @@ class User implements UserInterface
     {
         if (!$this->interactions->contains($interaction)) {
             $this->interactions[] = $interaction;
-            $interaction->setUserId($this);
+            $interaction->setUser($this);
         }
 
         return $this;
@@ -234,8 +234,8 @@ class User implements UserInterface
     {
         if ($this->interactions->removeElement($interaction)) {
             // set the owning side to null (unless already changed)
-            if ($interaction->getUserId() === $this) {
-                $interaction->setUserId(null);
+            if ($interaction->getUser() === $this) {
+                $interaction->setUser(null);
             }
         }
 

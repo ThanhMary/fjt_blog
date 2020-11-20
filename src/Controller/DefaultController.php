@@ -18,7 +18,7 @@ class DefaultController extends AbstractController
         ]);
     }
 
-     /**
+    /**
      * @Route("/propos", name="propos")
      */
     public function propos(): Response
@@ -27,5 +27,4 @@ class DefaultController extends AbstractController
             'controller_name' => 'DefaultController',
         ]);
     }
-    
 }

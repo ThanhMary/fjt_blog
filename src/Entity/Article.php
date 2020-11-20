@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Article
 {
+    public const HIDDEN = 0;
+    public const VISIBLE = 1;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -171,7 +173,7 @@ class Article
     {
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
-            $comment->setArticleId($this);
+            $comment->setArticle($this);
         }
 
         return $this;
@@ -181,8 +183,8 @@ class Article
     {
         if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getArticleId() === $this) {
-                $comment->setArticleId(null);
+            if ($comment->getArticle() === $this) {
+                $comment->setArticle(null);
             }
         }
 
@@ -201,7 +203,7 @@ class Article
     {
         if (!$this->interactions->contains($interaction)) {
             $this->interactions[] = $interaction;
-            $interaction->setArticleId($this);
+            $interaction->setArticle($this);
         }
 
         return $this;
@@ -211,8 +213,8 @@ class Article
     {
         if ($this->interactions->removeElement($interaction)) {
             // set the owning side to null (unless already changed)
-            if ($interaction->getArticleId() === $this) {
-                $interaction->setArticleId(null);
+            if ($interaction->getArticle() === $this) {
+                $interaction->setArticle(null);
             }
         }
 
