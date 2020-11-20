@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Role;
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -25,6 +26,18 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
+
+        /* ROLES */
+        $userRole = new Role();
+        $userRole->setName('ROLE_USER');
+        $manager->persist($userRole);
+
+        $adminRole = new Role();
+        $adminRole->setName('ROLE_ADMIN');
+        $manager->persist($adminRole);
+        $manager->flush();
+
+        /* Users */
         $faker->seed(0);
         $user = new User();
         $user
@@ -32,7 +45,7 @@ class AppFixtures extends Fixture
             ->setLastname('userlast ')
             ->setEmail('user@gmail.com')
             ->setPassword($this->encoder->encodePassword($user, 'user'))
-            ->setRoles(['ROLE_USER']);
+            ->setRole($userRole);
         $manager->persist($user);
 
         $user = new User();
@@ -41,7 +54,7 @@ class AppFixtures extends Fixture
             ->setLastname('userlast ')
             ->setEmail('admin@gmail.com')
             ->setPassword($this->encoder->encodePassword($user, 'admin'))
-            ->setRoles(['ROLE_ADMIN']);
+            ->setRole($adminRole);
         $manager->persist($user);
         $manager->flush();
 
