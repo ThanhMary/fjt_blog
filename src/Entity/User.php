@@ -12,7 +12,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  */
-class User
+
+class User implements UserInterface
+
 {
     /**
      * @ORM\Id
@@ -58,15 +60,21 @@ class User
     private $interactions;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Role::class)
-     * @ORM\JoinColumn(nullable=false)
+
+     * @var array|string[]
      */
-    private $role;
+    private $roles = [];
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Role::class, inversedBy="users")
+     */
+    private $userRoles;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->interactions = new ArrayCollection();
+        $this->userRoles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -224,14 +232,57 @@ class User
         return $this;
     }
 
-    public function getRole(): ?Role
+    /**
+     * @return array|string[]
+     */
+    public function getRoles(): array
     {
-        return $this->role;
+        $roles = $this->userRoles->map(function($role){
+            return $role->getName();
+        })->toArray();
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
-    public function setRole(?Role $role): self
+    /**
+     * Set string[]
+     *
+     * @param  array  $roles  string[]
+     *
+     * @return  self
+     */
+    public function setRoles(array $roles)
     {
-        $this->role = $role;
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Role[]
+     */
+    public function getUserRoles(): Collection
+    {
+        return $this->userRoles;
+    }
+
+    public function addUserRole(Role $userRole): self
+    {
+        if (!$this->userRoles->contains($userRole)) {
+            $this->userRoles[] = $userRole;
+            $userRole->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRole(Role $userRole): self
+    {
+        if ($this->userRoles->removeElement($userRole)) {
+            $userRole->removeUser($this);
+        }
 
         return $this;
     }
