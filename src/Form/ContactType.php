@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Contact;
+use Attribute;
 use Symfony\Component\Form\AbstractType;
 
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,7 +23,7 @@ class ContactType extends AbstractType
             ->add('email')
             ->add('telephone')
             ->add('message', TextareaType::class, ['required' =>false])
-            ->add('save', SubmitType::class)
+           
         ;
     }
 
