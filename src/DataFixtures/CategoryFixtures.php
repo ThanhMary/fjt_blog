@@ -29,9 +29,9 @@ class CategoryFixtures extends Fixture
             $article
                 ->setCreationDate($faker->dateTimeBetween('-6 month', '+6 month', 'Europe/Paris'))
                 ->setState($key % 2 == 0 ? $article::VISIBLE : $article::HIDDEN)
-                ->setTitle($faker->text(150))
-                ->setSubtitle($faker->realText(250))
-                ->setContent($faker->realText(500))
+                ->setTitle($faker->text(20))
+                ->setSubtitle($faker->realText(30))
+                ->setContent($faker->realText(400))
                 ->setPicturePath($faker->imageUrl())
                 ->setCategory($category_object);
             $manager->persist($article);
