@@ -30,9 +30,18 @@ class AppFixtures extends Fixture
         $user
             ->setFirstname('userfirst')
             ->setLastname('userlast ')
-            ->setEmail('axel@gmail.com')
+            ->setEmail('user@gmail.com')
             ->setPassword($this->encoder->encodePassword($user, 'user'))
             ->setRoles(['ROLE_USER']);
+        $manager->persist($user);
+
+        $user = new User();
+        $user
+            ->setFirstname('userfirst')
+            ->setLastname('userlast ')
+            ->setEmail('admin@gmail.com')
+            ->setPassword($this->encoder->encodePassword($user, 'admin'))
+            ->setRoles(['ROLE_ADMIN']);
         $manager->persist($user);
         $manager->flush();
 
