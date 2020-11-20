@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+<div class="container">
+       <div class="row">
+       <div class="col-md-4" ></div>
+           <div class="col-md-4" style='border: 5px; padding: 20px; background-color: lightblue;'>
+               <h5 class=page-header>Contatez avec nous!</h5>
+                   {{form_start(form)}}
+                   {{form_widget(form)}}
+                   {{form_end(form)}}
+           </div>
+        <div class="col-md-4"></div>
+       </div>
+</div>
+{% endblock %}
