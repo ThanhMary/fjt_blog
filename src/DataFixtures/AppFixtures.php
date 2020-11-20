@@ -11,7 +11,6 @@ use App\Entity\Article;
 use App\Entity\Category;
 use App\Entity\Comment;
 use App\Entity\Interaction;
-use Faker\Factory;
 
 
 class AppFixtures extends Fixture
