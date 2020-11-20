@@ -26,6 +26,20 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * @Route("/home", name="article_home", methods={"GET"})
+     */
+    public function home(ArticleRepository $articleRepository): Response
+    {
+       // dd($articleRepository->findAll()[0]);
+        return $this->render('article/home.html.twig', [
+            'articles' => $articleRepository->findAll(),
+           
+        ]);
+       
+        
+    }
+
+    /**
      * @Route("/new", name="article_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
