@@ -47,17 +47,12 @@ class Article
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
      */
-    private $category_id;
+    private $category;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $picture_path;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $date;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="article_id")
@@ -140,14 +135,14 @@ class Article
         return $this;
     }
 
-    public function getCategoryId(): ?Category
+    public function getCategory(): ?Category
     {
-        return $this->category_id;
+        return $this->category;
     }
 
-    public function setCategoryId(?Category $category_id): self
+    public function setCategory(?Category $category): self
     {
-        $this->category_id = $category_id;
+        $this->category = $category;
 
         return $this;
     }
@@ -160,18 +155,6 @@ class Article
     public function setPicturePath(?string $picture_path): self
     {
         $this->picture_path = $picture_path;
-
-        return $this;
-    }
-
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
 
         return $this;
     }
