@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Comment;
 use App\Form\Article1Type;
 use App\Repository\ArticleRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/article")
@@ -24,6 +26,42 @@ class ArticleController extends AbstractController
             'articles' => $articleRepository->findAll(),
         ]);
     }
+
+    /**
+     * @Route("/home", name="article_home", methods={"GET"})
+     */
+    public function home(ArticleRepository $articleRepository): Response
+    {
+       // dd($articleRepository->findAll()[0]);
+        return $this->render('article/home.html.twig', [
+            'articles' => $articleRepository->findAll(),
+           
+        ]);
+    }
+
+    /**
+     * @Route("/detail", name="article_detail", methods={"GET"})
+     */
+    // public function detail(Article $article, Request $request, EntityManagerInterface $manager): Response
+    // {
+    //     $comment = new Comment();
+    //     $form = $this->createForm(CommentType::class, $comment);
+    //     $form->handleRequest($request);
+       
+    //     if($form->isSubmitted()&& $form->isValid()){
+    //         $comment->setDate(new \DateTime())
+    //                 ->setArticle($article);
+    //         $manager->persist($comment);
+    //         $manager->flush();
+
+    //         return $this->redirectToRoute('article_detail', ['id'=>$article->getId()]);
+    //     }
+    //     return $this->render('article/detail.html.twig', [
+    //         'article'=>$article,
+    //         'commentForm'=>$form->createView()
+    //     ]);
+        
+    // }
 
     /**
      * @Route("/new", name="article_new", methods={"GET","POST"})
