@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
+
 class ArticleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -24,6 +25,12 @@ class ArticleType extends AbstractType
             ->add('picturePath')
             // ->add('date')
             // ->add('category_id')
+            // ->add('category_id', EntityType::class, [
+            //     'class' => Category::class,
+            //     'choice_label' => 'name',
+            //     'choice_value' => 'id',
+            //     'expanded' => true,
+            // ])
         ;
     }
 

@@ -7,9 +7,27 @@
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         {% endblock %}
     </head>
+    <style>
+        .message {
+        border: 5px ;
+        width: 500px;
+        height: 100px;
+        background-color: #D5F5E3;    
+        text-align: center;
+        }
+</style>
     <body>
 
      {% include "include/navbar.html.twig" %}
+     <div class="container">
+        {% for label,messages in app.flashes %}
+            {% for message in messages %}
+           <center> <div class="message"><br>
+                <p>{{message}}</p>MERCI BIEN 
+            </div></center>
+            {% endfor %}
+        {% endfor %}
+    </div>
        <div class="container">
             {% block body %}
             {% endblock %}
