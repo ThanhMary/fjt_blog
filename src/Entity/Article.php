@@ -46,10 +46,6 @@ class Article
      */
     private $state;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
-     */
-    private $category;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -57,14 +53,20 @@ class Article
     private $picturePath;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="article_id")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="article")
      */
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Interaction::class, mappedBy="article_id")
+     * @ORM\OneToMany(targetEntity=Interaction::class, mappedBy="article")
      */
     private $interactions;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
 
     public function __construct()
     {
@@ -217,6 +219,18 @@ class Article
                 $interaction->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategorys(): ?Category
+    {
+        return $this->categorys;
+    }
+
+    public function setCategorys(?Category $categorys): self
+    {
+        $this->categorys = $categorys;
 
         return $this;
     }
