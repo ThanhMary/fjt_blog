@@ -7,10 +7,14 @@ use App\Entity\Comment;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\String\Slugger\SluggerInterface;
+
 
 /**
  * @Route("/article")
@@ -32,10 +36,10 @@ class ArticleController extends AbstractController
      */
     public function home(ArticleRepository $articleRepository): Response
     {
-       // dd($articleRepository->findAll()[0]);
+        // dd($articleRepository->findAll()[0]);
         return $this->render('article/home.html.twig', [
             'articles' => $articleRepository->findAll(),
-           
+
         ]);
     }
 
@@ -47,7 +51,7 @@ class ArticleController extends AbstractController
     //     $comment = new Comment();
     //     $form = $this->createForm(CommentType::class, $comment);
     //     $form->handleRequest($request);
-       
+
     //     if($form->isSubmitted()&& $form->isValid()){
     //         $comment->setDate(new \DateTime())
     //                 ->setArticle($article);
@@ -60,20 +64,36 @@ class ArticleController extends AbstractController
     //         'article'=>$article,
     //         'commentForm'=>$form->createView()
     //     ]);
-        
+
     // }
 
     /**
      * @Route("/new", name="article_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, SluggerInterface $slugger): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $picture = $form->get('picturePath')->getData();
+            if ($picture) {
+                $originalFilename = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $picture->guessExtension();
+                try {
+                    $picture->move(
+                        $this->getParameter('pictures'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    throw new Exception('');
+                }
+                $article->setPicturePath($this->getParameter('pictures') . '/' . $newFilename);
+            }
             $entityManager->persist($article);
             $entityManager->flush();
 
@@ -121,7 +141,7 @@ class ArticleController extends AbstractController
      */
     public function delete(Request $request, Article $article): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($article);
             $entityManager->flush();

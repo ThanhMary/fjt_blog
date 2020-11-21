@@ -12,6 +12,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class ArticleType extends AbstractType
 {
@@ -28,7 +30,26 @@ class ArticleType extends AbstractType
                     'Personnel' => 2,
                 ],
             ])
-            ->add('picturePath')
+            ->add('picturePath', FileType::class, [
+                'label' => 'Main picture ',
+                'mapped' => false,
+                // make it optional so you don't have to re-upload the PDF file
+                // every time you edit the Product details
+                'required' => false,
+                // unmapped fields can't define their validation using annotations
+                // in the associated entity, so you can use the PHP constraint classes
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/svg',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid picture',
+                    ])
+                ],
+            ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
