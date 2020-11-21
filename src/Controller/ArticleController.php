@@ -2,18 +2,19 @@
 
 namespace App\Controller;
 
+use DateTime;
+use Exception;
 use App\Entity\Article;
 use App\Entity\Comment;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use Symfony\Component\Asset\Packages;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 /**
@@ -21,6 +22,9 @@ use Symfony\Component\String\Slugger\SluggerInterface;
  */
 class ArticleController extends AbstractController
 {
+
+
+
     /**
      * @Route("/", name="article_index", methods={"GET"})
      */
@@ -67,10 +71,12 @@ class ArticleController extends AbstractController
 
     // }
 
+
+
     /**
      * @Route("/new", name="article_new", methods={"GET","POST"})
      */
-    public function new(Request $request, SluggerInterface $slugger): Response
+    public function new(Request $request, Packages $assetPackage): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
@@ -80,20 +86,20 @@ class ArticleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $picture = $form->get('picturePath')->getData();
+            $article->setCreationDate(new DateTime());
             if ($picture) {
-                $originalFilename = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $picture->guessExtension();
+                $newFilename = uniqid() . '.' . $picture->guessExtension();
                 try {
                     $picture->move(
                         $this->getParameter('pictures'),
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    throw new Exception('');
+                    throw new Exception('Error on picture upload');
                 }
-                $article->setPicturePath($this->getParameter('pictures') . '/' . $newFilename);
+                $article->setPicturePath($request->getSchemeAndHttpHost() . '/uploads/pictures/' . $newFilename);
             }
+
             $entityManager->persist($article);
             $entityManager->flush();
 
@@ -105,6 +111,7 @@ class ArticleController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 
     /**
      * @Route("/{id}", name="article_show", methods={"GET"})
