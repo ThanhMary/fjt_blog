@@ -50,12 +50,12 @@ class User implements UserInterface
     private $phone_number;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user_id")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
      */
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Interaction::class, mappedBy="user_id")
+     * @ORM\OneToMany(targetEntity=Interaction::class, mappedBy="user")
      */
     private $interactions;
 
@@ -237,7 +237,7 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->userRoles->map(function($role){
+        $roles = $this->userRoles->map(function ($role) {
             return $role->getName();
         })->toArray();
         // guarantee every user at least has ROLE_USER
