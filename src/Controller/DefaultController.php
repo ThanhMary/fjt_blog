@@ -12,10 +12,10 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="default")
      */
-    public function index(): Response
-    {
-        return $this->redirectToRoute('article_home');
-    }
+    // public function index(): Response
+    // {
+    //     return $this->redirectToRoute('article_home');
+    // }
 
     /**
      * @Route("/propos", name="propos")
@@ -28,7 +28,7 @@ class DefaultController extends AbstractController
     }
 
      /**
-     * @Route("/home", name="default_home", methods={"GET"})
+     * @Route("/", name="default_home", methods={"GET"})
      */
     public function home(ArticleRepository $articleRepository): Response
     {
