@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+        <div id="app">
+            <div>@{ test}</div>
+           {# <section class="articles">
+                <div>Filter</div>
+
+                <h1>Article Aimés</h1>
+
+                {% for liked_article in liked_articles %}
+                    <hr>
+
+                    <article class="article">
+                        <h3>{{liked_article.article.title}}</h3>
+                        <h5>{{liked_article.article.subtitle}}</h5>
+                        <div class="metadate">Ecrit le
+                            {{liked_article.article.creationDate | date('d/m/Y')}}
+                            à
+                            {{liked_article.article.creationDate | date('H:i')}}
+                            dans la categorie:
+                            {{liked_article.article.category.name}}</div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img src='{{liked_article.article.picturePath}}' , style="width:200px;height:130px;">
+                            </div>
+                            <div class="col-md-8">
+                                {{liked_article.article.content | raw}}
+                                <a href="{{path('article_show', {'id': liked_article.article.id})}}" class="btn btn-outline-info">... Détail</a>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </section>#}
+
+        </div>
+    <style>
+        .article {
+            padding: 10px;
+        }
+        a {
+            color: inherit;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .article:hover {
+            /*color: #bdaa77;*/
+            background-color: #D5F5E3;
+        }
+    </style>
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Interaction;
 use App\Entity\Role;
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
@@ -70,6 +71,7 @@ class UserFixtures extends Fixture
 
         $manager->persist($cat_politique);
         $manager->persist($cat_sport);
+
         $this->addReference(self::USER_REFERENCE, $user);
         $this->addReference(self::ADMIN_USER_REFERENCE, $userAdmin);
         $this->addReference(self::SPORT_CATEGORY, $cat_sport);

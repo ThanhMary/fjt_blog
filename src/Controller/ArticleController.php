@@ -23,9 +23,6 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
  */
 class ArticleController extends AbstractController
 {
-
-
-
     /**
      * @Route("/", name="article_index", methods={"GET"})
      */
@@ -165,4 +162,5 @@ class ArticleController extends AbstractController
 
         return $this->redirectToRoute('article_index');
     }
+
 }
