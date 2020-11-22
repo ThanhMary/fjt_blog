@@ -24,15 +24,11 @@ class ArticleController extends AbstractController
     /**
      * @Route("/", name="article_index", methods={"GET"})
      */
-    public function index(ArticleRepository $articleRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(): Response
     {
         // Méthode findBy qui permet de récupérer les données avec des critères de filtre et de tri
-            $donnees = $this->getDoctrine()->getRepository(Article::class)->findBy([],['creationDate' => 'desc']);
-            $articles = $paginator->paginate(
-            $donnees, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), 
-              5 ); // Nombre de résultats par page
-        
+            $articles= $this->getDoctrine()->getRepository(Article::class)->findBy([],['creationDate' => 'desc']);
+         
         return $this->render('article/index.html.twig', [
             'articles' => $articles,
         ]);

@@ -1,18 +1,16 @@
 <?php
-
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="`user`")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -45,7 +43,7 @@ class User
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $phone_number;
+    private $phoneNumber;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user_id")
@@ -58,15 +56,22 @@ class User
     private $interactions;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Role::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @var array|string[]
      */
-    private $role;
+    private $roles = [];
+
+    /**
+     * @var Collection
+     * @ORM\ManyToMany(targetEntity=Role::class, inversedBy="users", cascade={"persist", "remove"})
+     * @ORM\JoinTable(name="role_user")
+     */
+    private $userRoles;
+
+    
 
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
-        $this->interactions = new ArrayCollection();
+        $this->userRoles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -86,17 +91,7 @@ class User
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUsername(): string
-    {
-        return (string) $this->email;
-    }
-
-    /**
+     /**
      * @see UserInterface
      */
     public function getPassword(): string
@@ -110,24 +105,6 @@ class User
 
         return $this;
     }
-
-    /**
-     * @see UserInterface
-     */
-    public function getSalt()
-    {
-        // not needed when using the "bcrypt" algorithm in security.yaml
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials()
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
-    }
-
     public function getFirstname(): ?string
     {
         return $this->firstname;
@@ -154,17 +131,16 @@ class User
 
     public function getPhoneNumber(): ?string
     {
-        return $this->phone_number;
+        return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(?string $phone_number): self
+    public function setPhoneNumber(?string $phoneNumber): self
     {
-        $this->phone_number = $phone_number;
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
-
-    /**
+  /**
      * @return Collection|Comment[]
      */
     public function getComments(): Collection
@@ -224,15 +200,81 @@ class User
         return $this;
     }
 
-    public function getRole(): ?Role
+  
+
+    /**
+     * @return array|string[]
+     */
+    public function getRoles(): array
     {
-        return $this->role;
+        $roles = $this->userRoles->map(function($role){
+            return $role->getName();
+        })->toArray();
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
-    public function setRole(?Role $role): self
+    /**
+     * Set string[]
+     *
+     * @param  array  $roles  string[]
+     *
+     * @return  self
+     */ 
+    public function setRoles(array $roles)
     {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
     }
+
+    /**
+     * @return Collection|Role[]
+     */
+    public function getUserRoles(): Collection
+    {
+        return $this->userRoles;
+    }
+
+    public function addUserRole(Role $userRole): self
+    {
+        if (!$this->userRoles->contains($userRole)) {
+            $this->userRoles[] = $userRole;
+            $userRole->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRole(Role $userRole): self
+    {
+        if ($this->userRoles->removeElement($userRole)) {
+            $userRole->removeUser($this);
+        }
+
+        return $this;
+    }
+  /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+  
+   
+
 }
+

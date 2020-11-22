@@ -14,6 +14,7 @@ use App\Entity\Comment;
 use App\Entity\Interaction;
 
 
+
 class AppFixtures extends Fixture
 {
     /** @var UserPasswordEncoderInterface */
@@ -45,7 +46,7 @@ class AppFixtures extends Fixture
             ->setLastname('userlast ')
             ->setEmail('user@gmail.com')
             ->setPassword($this->encoder->encodePassword($user, 'user'))
-            ->setRole($userRole);
+            ->addUserRole($userRole);
         $manager->persist($user);
 
         $user = new User();
@@ -54,18 +55,10 @@ class AppFixtures extends Fixture
             ->setLastname('userlast ')
             ->setEmail('admin@gmail.com')
             ->setPassword($this->encoder->encodePassword($user, 'admin'))
-            ->setRole($adminRole);
+            ->addUserRole($userRole);
         $manager->persist($user);
 
-        $user = new User();
-        $user
-            ->setFirstname('userfirst')
-            ->setLastname('userlast ')
-            ->setEmail('admin@gmail.com')
-            ->setPassword($this->encoder->encodePassword($user, 'admin'))
-            ->setRoles(['ROLE_ADMIN']);
-        $manager->persist($user);
-        $manager->flush();
+      
 
         $cat_sport = new Category();
         $cat_sport->setName('sport');

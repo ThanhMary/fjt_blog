@@ -10,7 +10,7 @@
     <div class="col-9" style='border: 5px; padding: 20px; background-color: #D5F5E3;'>
         <section class="articles">
         {% for article in articles %}
-        
+        <hr>
             <article>
                 <h3>{{article.title}}</h3>
                 <h5>{{article.subtitle}}</h5>
@@ -31,11 +31,12 @@
         {% endfor %}
        
     </section>
-        <center>
-            <div class="row pagination"> 
+
+      <hr>
+            <div class="pagination float-center"> 
                 {{knp_pagination_render(articles)}}
             </div>
-        </center>
+      
      
     </div>
      
