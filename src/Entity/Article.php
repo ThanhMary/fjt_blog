@@ -63,10 +63,17 @@ class Article
     private $interactions;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles",  cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $user;
+
 
     public function __construct()
     {
@@ -231,6 +238,18 @@ class Article
     public function setCategorys(?Category $categorys): self
     {
         $this->categorys = $categorys;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use DateTime;
 use Exception;
+use App\Entity\User;
 use App\Entity\Article;
 use App\Entity\Comment;
 use App\Form\ArticleType;
@@ -40,7 +41,11 @@ class ArticleController extends AbstractController
      */
     public function home(ArticleRepository $articleRepository): Response
     {
-        // dd($articleRepository->findAll()[0]);
+        $user = $this->getUser();
+        if (!is_null($user)) {
+            $user = new User($user->getId());
+            dd($user->getArticles());
+        }
         return $this->render('article/home.html.twig', [
             'articles' => $articleRepository->findAll(),
 
@@ -98,6 +103,7 @@ class ArticleController extends AbstractController
                     throw new Exception('Error on picture upload');
                 }
                 $article->setPicturePath($request->getSchemeAndHttpHost() . '/uploads/pictures/' . $newFilename);
+                $article->setUser($this->getUser());
             }
 
             $entityManager->persist($article);
@@ -128,7 +134,7 @@ class ArticleController extends AbstractController
      */
     public function edit(Request $request, Article $article): Response
     {
-        $form = $this->createForm(Article1Type::class, $article);
+        $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
