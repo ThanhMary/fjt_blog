@@ -82,6 +82,7 @@ class AppFixtures extends Fixture
                 ->setState($i % 2 == 0 ? $article::VISIBLE : $article::HIDDEN)
                 ->setTitle($faker->text(20))
                 ->setSubtitle($faker->realText(30))
+                ->setAuthor($faker->last_name)
                 ->setContent($faker->realText(400))
                 ->setPicturePath($faker->imageUrl())
                 ->setCategory($i % 2 == 0 ? $cat_sport : $cat_politique);

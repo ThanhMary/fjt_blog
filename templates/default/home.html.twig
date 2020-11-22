@@ -2,27 +2,46 @@
 
 {% block body %}
 <div class="container">
-<section class="articles">
-    {% for article in articles %}
-     <hr>
-        <article>
-            <h3>{{article.title}}</h3>
-             <h5>{{article.subtitle}}</h5>
-             {# <div class="metadate">Ecrit le {{article.creationDate | date('d/m/Y')}} à {{article.creationDate | date('H:i')}} dans la categorie: {{article.category.name}}</div> #}
-            <div class="metadate">Ecrit le {{article.creationDate | date('d/m/Y')}} à {{article.creationDate | date('H:i')}} || 
-            Categorie:  {{article.category.name}}  </div>
-            <div class="row">
-                <div class="col-md-3">
-                <img src='{{article.picturePath}}', style="width:200px;height:130px;">
+<div class="row">
+    <div class="col-3" style='border: 5px; padding: 20px; background-color: #3B5145;'>
+    
+    <h6  style='color: white;'>Articles plus aimés</h6>
+    </div>
+    <div class="col-9" style='border: 5px; padding: 20px; background-color: #D5F5E3;'>
+        <section class="articles">
+        {% for article in articles %}
+        
+            <article>
+                <h3>{{article.title}}</h3>
+                <h5>{{article.subtitle}}</h5>
+                {# <div class="metadate">Ecrit le {{article.creationDate | date('d/m/Y')}} à {{article.creationDate | date('H:i')}} dans la categorie: {{article.category.name}}</div> #}
+                <div class="metadate">Ecrit le {{article.creationDate | date('d/m/Y')}}, by {{article.author}} à {{article.creationDate | date('H:i')}}, 
+                Categorie:  {{article.category.name}}  </div>
+                <div class="row">
+                    <div class="col-md-3">
+                    <img src='{{article.picturePath}}', style="width:200px;height:130px;">
+                    </div>
+                    <div class="col-md-9">
+                    {{article.content | raw}}
+                    <a href="{{path('default_show', {'id': article.id})}}" class="btn btn-outline-info">... Lire la suite</a>
+                    </div>
                 </div>
-                <div class="col-md-9">
-                {{article.content | raw}}
-                <a href="{{path('article_detail', {'id': article.id})}}" class="btn btn-outline-info">... Lire la suite</a>
-                </div>
-             </div>
-             
-        </article>
-    {% endfor %}
-</section>
+                
+            </article>
+        {% endfor %}
+       
+    </section>
+        <center>
+            <div class="row pagination"> 
+                {{knp_pagination_render(articles)}}
+            </div>
+        </center>
+     
+    </div>
+     
+ 
+</div>
+       
+
 </div>
 {% endblock %}

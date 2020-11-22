@@ -4,12 +4,11 @@
 
 {% block body %}
     <h3>Messages</h3>
-
-    <table class="table">
+<div style='border: 5px; padding: 20px; background-color: #D5F5E3;' >
+    <table class="table table-hover table-responsive-lg table-bordered">
         <thead>
             <tr>
-               
-                <th>FirtName</th>
+                <th>FirstName</th>
                 <th>LastName</th>
                 <th>Email</th>
                 <th>Telephone</th>
@@ -21,7 +20,7 @@
         {% for contact in contacts %}
             <tr>
                
-                <td>{{ contact.firtName }}</td>
+                <td>{{ contact.firstName }}</td>
                 <td>{{ contact.lastName }}</td>
                 <td>{{ contact.email }}</td>
                 <td>{{ contact.telephone }}</td>
@@ -37,5 +36,5 @@
         {% endfor %}
         </tbody>
     </table>
-
+</div>
 {% endblock %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Form\ContactType;
 use App\Repository\ContactRepository;
+use Doctrine\DBAL\Schema\View;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,8 +41,8 @@ class ContactController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success','Votre message a été bien envoyé aux membres du FJT_BLOG.');
-            return $this->redirectToRoute("default");
-           
+             return $this->redirectToRoute("default_home");
+          
         }
 
         return $this->render('contact/new.html.twig', [

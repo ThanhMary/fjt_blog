@@ -3,7 +3,7 @@
 {% block title %}Contact{% endblock %}
 
 {% block body %}
-    <h1>Contact</h1>
+    <h3>Contact</h3>
 
     <table class="table">
         <tbody>
@@ -12,8 +12,8 @@
                 <td>{{ contact.id }}</td>
             </tr>
             <tr>
-                <th>FirtName</th>
-                <td>{{ contact.firtName }}</td>
+                <th>firstName</th>
+                <td>{{ contact.firstName }}</td>
             </tr>
             <tr>
                 <th>LastName</th>
@@ -34,9 +34,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('contact_index') }}">back to list</a>
-
-    <a href="{{ path('contact_edit', {'id': contact.id}) }}">edit</a>
-
+    <a href="{{ path('contact_index') }}">back to list</a> ||
+    <a href="{{ path('contact_edit', {'id': contact.id}) }}">edit</a> || 
     {{ include('contact/_delete_form.html.twig') }}
+
+    
 {% endblock %}
