@@ -71,9 +71,10 @@ class User implements UserInterface
     private $userRoles;
 
     /**
-     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="autor")
      */
     private $articles;
+
 
     public function __construct()
     {

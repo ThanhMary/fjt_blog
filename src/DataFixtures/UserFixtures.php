@@ -46,10 +46,11 @@ class UserFixtures extends Fixture
             ->setLastname('userlast ')
             ->setEmail('user@gmail.com')
             ->setPassword($this->encoder->encodePassword($user, 'user'))
-
             ->addUserRole($userRole);
+
         $manager->persist($user);
         $manager->flush();
+
         $users[] = $user;
         $userAdmin = new User();
         $userAdmin
@@ -58,9 +59,9 @@ class UserFixtures extends Fixture
             ->setEmail('admin@gmail.com')
             ->setPassword($this->encoder->encodePassword($user, 'admin'))
             ->addUserRole($adminRole);
+
         $manager->persist($userAdmin);
         $manager->flush();
-        $users[] = $userAdmin;
 
         $cat_sport = new Category();
         $cat_sport->setName('sport');

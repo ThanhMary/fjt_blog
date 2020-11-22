@@ -41,14 +41,14 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
                 ->setSubtitle($faker->realText(30))
                 ->setContent($faker->realText(400))
                 ->setPicturePath($faker->imageUrl())
-                ->setCategory($i % 2 == 0 ? $cat_sport : $cat_politique);
-            $manager->persist($article);
-            $manager->flush();
-            $user->addArticle($article);
-            $manager->persist($user);
+                ->setCategory($i % 2 == 0 ? $cat_sport : $cat_politique)
+                ->setAutor($user);
             $manager->persist($article);
             $articles[] = $article;
+            $manager->flush();
         }
+
+
         for ($i = 0; $i < 10; $i++) {
             $comment = new Comment();
             $comment
