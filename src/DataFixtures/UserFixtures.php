@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Interaction;
 use App\Entity\Role;
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
@@ -46,10 +47,11 @@ class UserFixtures extends Fixture
             ->setLastname('userlast ')
             ->setEmail('user@gmail.com')
             ->setPassword($this->encoder->encodePassword($user, 'user'))
-
             ->addUserRole($userRole);
+
         $manager->persist($user);
         $manager->flush();
+
         $users[] = $user;
         $userAdmin = new User();
         $userAdmin
@@ -58,9 +60,9 @@ class UserFixtures extends Fixture
             ->setEmail('admin@gmail.com')
             ->setPassword($this->encoder->encodePassword($user, 'admin'))
             ->addUserRole($adminRole);
+
         $manager->persist($userAdmin);
         $manager->flush();
-        $users[] = $userAdmin;
 
         $cat_sport = new Category();
         $cat_sport->setName('sport');
@@ -69,6 +71,7 @@ class UserFixtures extends Fixture
 
         $manager->persist($cat_politique);
         $manager->persist($cat_sport);
+
         $this->addReference(self::USER_REFERENCE, $user);
         $this->addReference(self::ADMIN_USER_REFERENCE, $userAdmin);
         $this->addReference(self::SPORT_CATEGORY, $cat_sport);

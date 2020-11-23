@@ -23,9 +23,6 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
  */
 class ArticleController extends AbstractController
 {
-
-
-
     /**
      * @Route("/", name="article_index", methods={"GET"})
      */
@@ -42,13 +39,16 @@ class ArticleController extends AbstractController
     public function home(ArticleRepository $articleRepository): Response
     {
         $user = $this->getUser();
-        if (!is_null($user)) {
-            $user = new User($user->getId());
-            dd($user->getArticles());
+        if ($user) {
+            $articles = $user->getArticles()->toArray();
+            foreach ($articles as $article) {
+                $tabArticles[] = $article->getId();
+            }
         }
+
         return $this->render('article/home.html.twig', [
             'articles' => $articleRepository->findAll(),
-
+            'user_article' => isset($tabArticles) && $tabArticles ? $tabArticles : null,
         ]);
     }
 
@@ -162,4 +162,5 @@ class ArticleController extends AbstractController
 
         return $this->redirectToRoute('article_index');
     }
+
 }
