@@ -6,47 +6,75 @@
 		<section class="articles">
 			{% for article in articles %}
 				<hr>
-				{% if article.id in user_article  %}
-					<a href="{{path('article_edit', {'id': article.id})}}">
-					{% else %}
-						<a href="{{path('article_show', {'id': article.id})}}">
-						{% endif %}
-
-						<article class="article">
+				<article class="article">
+					{% if article.id in user_article  %}
+						<a class="link" href="{{path('article_edit', {'id': article.id})}}">
+						{% else %}
+							<a class="link" href="{{path('article_show', {'id': article.id})}}">
+							{% endif %}
 							<h3>{{article.title}}</h3>
 							<h5>{{article.subtitle}}</h5>
-							<div class="metadate">Ecrit le
-								{{article.creationDate | date('d/m/Y')}}
-								à
-								{{article.creationDate | date('H:i')}}
-								dans la categorie:
-								{{article.category.name}}</div>
-							<div class="row">
-								<div class="col-md-4">
-									<img src='{{article.picturePath}}' , style="width:200px;height:130px;">
-								</div>
-								<div class="col-md-8">
-									{{article.content | raw}}
-									{# <a href="{{path('', {'id': article.id})}}" class="btn btn-outline-info">... Lire la suite</a> #}
-								</div>
+						</a>
+						<div class="metadate mb-10">Ecrit le
+							{{article.creationDate | date('d/m/Y')}}
+							à
+							{{article.creationDate | date('H:i')}}
+							dans la categorie:
+							{{article.category.name}}</div>
+						<div class="row">
+							<div class="col-md-4">
+								<img src='{{article.picturePath}}' , style="width:200px;height:130px;">
 							</div>
-						</article>
-					</a>
+							<div class="col-md-8">
+								{{article.content[1:150] | raw}}
+								{# <a href="{{path('', {'id': article.id})}}" class="btn btn-outline-info">... Lire la suite</a> #}
+							</div>
+						</div>
+						<div class="socials">
+							<div class="social">
+								<span class="social_tag">
+									J'aime
+								</span>
+								<svg class="social_icon">
+									<use xlink:href="#like"></use>
+								</svg>
+
+
+							</div>
+							<div class="social">
+								<span class="social_tag">
+									Partager
+								</span>
+								<svg class="social_icon">
+									<use xlink:href="#comment"></use>
+								</svg>
+							</div>
+
+							{% for comment in article.comments %}
+								<div>
+									<div>
+										{{comment.content}}
+									</div>
+									<div>
+										{{comment.date |date('Y-m-d H:i:s') }}
+									</div>
+								</div>
+							{% endfor %}
+							{% if app.user %}
+								FORM COMMENTAIRE
+							{% else %}
+								<a href="{{path('app_login')}}">Veuillez vous connectez afin de laisser un commentaire</a>
+
+							{% endif %}
+
+						</div>
+					</article>
+
 				{% endfor %}
 			</section>
-			<style>
-				.article {
-					padding: 10px;
-				}
-				a {
-					color: inherit;
-					cursor: pointer;
-					text-decoration: none;
-				}
-				.article:hover {
-					/*color: #bdaa77;*/
-					background-color: #D5F5E3;
-				}
-			</style>
 		</div>
+	{% endblock %}
+	{% block stylesheets %}
+		<link rel="stylesheet" href="/css/bootstrap.min.css">
+		<link href="{{ asset('css/article/home.css') }}" rel="stylesheet"/>
 	{% endblock %}

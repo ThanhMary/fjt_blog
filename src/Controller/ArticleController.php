@@ -6,6 +6,7 @@ use DateTime;
 use Exception;
 use App\Entity\User;
 use App\Entity\Article;
+use App\Entity\Interaction;
 use App\Entity\Comment;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
@@ -89,6 +90,7 @@ class ArticleController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dd($request);
             $entityManager = $this->getDoctrine()->getManager();
             $picture = $form->get('picturePath')->getData();
             $article->setCreationDate(new DateTime());
@@ -103,7 +105,7 @@ class ArticleController extends AbstractController
                     throw new Exception('Error on picture upload');
                 }
                 $article->setPicturePath($request->getSchemeAndHttpHost() . '/uploads/pictures/' . $newFilename);
-                $article->setUser($this->getUser());
+                $article->setAutor($this->getUser());
             }
 
             $entityManager->persist($article);
@@ -116,6 +118,22 @@ class ArticleController extends AbstractController
             'article' => $article,
             'form' => $form->createView(),
         ]);
+    }
+    /**
+     * @Route("/{id}", name="article_like", methods={"POST"})
+     */
+    public function like(Request $request, Article $article): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $like = new Interaction();
+        $like->setUser($this->getUser())
+            ->setArticle($article)
+            ->setInteractionType(Interaction::LIKE);
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('article_index');
     }
 
 
@@ -162,5 +180,4 @@ class ArticleController extends AbstractController
 
         return $this->redirectToRoute('article_index');
     }
-
 }

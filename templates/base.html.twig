@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    {% block stylesheets %}
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-    {% endblock %}
-</head>
-<body>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			<link rel="stylesheet" href="/css/bootstrap.min.css">
+		{% endblock %}
+	</head>
+	<body>
+		{% include "include/sprite.html.twig" %}
+		{% include "include/navbar.html.twig" %}
 
-{% include "include/navbar.html.twig" %}
+		<div class="container"> {% block body %}{% endblock %}
+			</div>
 
-<div class="container">
-    {% block body %}
-    {% endblock %}
-</div>
+			{% block javascripts %}
+				<script src="/js/jquery-3.2.1.slim.min.js"></script>
+				<script src="/js/popper.min.js"></script>
+				<script src="/js/bootstrap.min.js"></script>
+			{% endblock %}
+			{# Vue js #}
+			{{ encore_entry_script_tags('app') }}
 
-{% block javascripts %}
-    <script src="/js/jquery-3.2.1.slim.min.js"></script>
-    <script src="/js/popper.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-{% endblock %}
-{# Vue js #}
-{{ encore_entry_script_tags('app') }}
-
-</body>
-</html>
+		</body>
+	</html>
