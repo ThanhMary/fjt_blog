@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\ArticleSearch;
 use App\Entity\Comment;
 use App\Form\CommentType;
+use App\Form\SearchForm;
 use DateTime;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,9 +22,17 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="default")
      */
-    // public function index(): Response
+    // public function index(ArticleRepository $articleRepository, Request $request): Response
     // {
-    //     return $this->redirectToRoute('article_home');
+    //     $data = new ArticleSearch();
+    //     $data->page = $request->get('page', 1);
+    //     $form = $this->createForm(SearchForm::class, $data);
+    //     $form->handleRequest($request);
+    //     $articles = $articleRepository->findSearch($data);
+    //     return $this->render('default/home.html.twig', [
+    //         'articles' => $articles,
+    //         'form' => $form->createView()
+    //     ]);
     // }
 
     /**
@@ -41,6 +51,7 @@ class DefaultController extends AbstractController
 
     public function home(PaginatorInterface $paginator, Request $request): Response
     {
+        
         // Méthode findBy qui permet de récupérer les données avec des critères de filtre et de tri
             $donnees = $this->getDoctrine()->getRepository(Article::class)->findBy([],['creationDate' => 'desc']);
             $articles = $paginator->paginate(

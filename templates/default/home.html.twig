@@ -3,10 +3,19 @@
 {% block body %}
 <div class="container">
 <div class="row">
-    <div class="col-3" style='border: 5px; padding: 20px; background-color: #3B5145;'>
-    
-    <h6  style='color: white;'>Articles plus aimés</h6>
-    </div>
+    <div class="col-3" style='border: 5px; padding: 20px; background-color: #3B5145;'> Recherche
+{#    
+  {{ form_start(form, {attr: {class: 'filter js-filter-form'}}) }} 
+    <div class="spinner-border js-loading" role="status" aria-hidden="true" style="display: none">
+    <span class="sr-only">Loading...</span>  </div>
+
+            {{ form_row(form.q) }}
+           <h4>Catégories</h4>
+            {{ form_row(form.categories) }}
+            <button type="submit" class="btn btn-primary w-100">Filtrer</button>
+            {{ form_end(form) }}#}
+    </div> 
+
     <div class="col-9" style='border: 5px; padding: 20px; background-color: #D5F5E3;'>
         <section class="articles">
         {% for article in articles %}
