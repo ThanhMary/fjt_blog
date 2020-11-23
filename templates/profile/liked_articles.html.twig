@@ -1,40 +1,53 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+    {# Vue js #}
         <div id="app">
-            <div>@{ test}</div>
-           {# <section class="articles">
+             <section class="articles">
                 <div>Filter</div>
+                 <div v-for="(filter, index) in filters">
+                     <div>@{index}</div>
+                    <div @click="update_filter(index)"> @{filter}</div>
+                 </div>
 
                 <h1>Article Aimés</h1>
 
-                {% for liked_article in liked_articles %}
-                    <hr>
+                 <div v-for="liked_article in filter_liked_articles">
+                     <hr>
 
                     <article class="article">
-                        <h3>{{liked_article.article.title}}</h3>
-                        <h5>{{liked_article.article.subtitle}}</h5>
+                        <h3>@{liked_article.title}</h3>
+                        <h5>@{liked_article.subtitle}</h5>
                         <div class="metadate">Ecrit le
-                            {{liked_article.article.creationDate | date('d/m/Y')}}
+                            {# TODO: date good format #}
+                            @{liked_article.creation_date.date }
                             à
-                            {{liked_article.article.creationDate | date('H:i')}}
+                            @{liked_article.creation_date.date }
                             dans la categorie:
-                            {{liked_article.article.category.name}}</div>
+                            @{liked_article.category_name}</div>
                         <div class="row">
                             <div class="col-md-4">
-                                <img src='{{liked_article.article.picturePath}}' , style="width:200px;height:130px;">
+                                <img :src='liked_article.picture_path' style="width:200px;height:130px;">
                             </div>
                             <div class="col-md-8">
-                                {{liked_article.article.content | raw}}
-                                <a href="{{path('article_show', {'id': liked_article.article.id})}}" class="btn btn-outline-info">... Détail</a>
+                                @{liked_article.content}
+                                {# TODO: how to make path #}
+{#
+                                <a href="{{path('article_show', {'id':  )}}" class="btn btn-outline-info">... Détail</a>
+#}
                             </div>
                         </div>
                     </article>
-                {% endfor %}
-            </section>#}
-
+                    </div>
+             </section>
         </div>
+    <script>
+        window.routes = {
+            profile_liked_articles : "{{ path('profile.get_liked_articles') }}"
+        }
+    </script>
+    {{ encore_entry_script_tags('app') }}
+
     <style>
         .article {
             padding: 10px;
