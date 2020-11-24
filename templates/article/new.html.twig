@@ -1,11 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Article{% endblock %}
+{% block title %}New Article
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Article</h1>
+	{#  {{ include('article/_form.html.twig') }} #}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-1" style='border: 5px; padding: 20px; background-color: #3B5145;'></div>
+			<div class="col-md-10" style='border: 5px; padding: 20px; background-color: #D5F5E3;'>
+				<h1 class="h3 mb-3 font-weight-normal">New article</h1>
+				{{form_start(form)}}
+				<div class="row">
+					<div class="col-sm-6">
+						{{ form_row(form.title, {'attr': {'placeholder': "Titre de l'article"}}) }}
+					</div>
+					<div class="col-sm-6">
+						{{ form_row(form.subtitle, {'attr': {'placeholder': "Soustitre de l'article"}}) }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						{{ form_row(form.category, {'attr': {'placeholder': "Catégorie de l'article"}}) }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						{{ form_row(form.picturePath, {'attr': {'placeholder': "L'image de l'article"}}) }}
+					</div>
+					<div class="col-sm-6">
+						{{ form_row(form.state, {'attr': {'placeholder': ">Etat de l'article"}}) }}
+					</div>
+				</div>
 
-    {{ include('article/_form.html.twig') }}
+				{{ form_row(form.content, {'attr': {'placeholder': "Contenu de l'article"}}) }}
 
-    <a href="{{ path('article_index') }}">back to list</a>
+
+				<button class="btn btn-outline-info float-right">
+					{% if editMode %}
+						EDIT
+					{% else %}
+						SAVE
+					{% endif %}
+				</button>
+				<a class="btn btn-outline-primary " href="{{ path('article_index') }}">Back to list</a>
+
+
+				{# {{form_widget(form)}}
+												                         <button class="btn btn-outline-info float-right" >{{ button_label|default('Envoyer') }}</button> #}
+				{{form_end(form)}}
+
+
+			</div>
+			<div class="col-md-1" style='border: 5px; padding: 20px; background-color: #3B5145;'></div>
+		</div>
+	</div>
+
+
 {% endblock %}

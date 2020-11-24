@@ -1,7 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<img
-	src="https://i2.wp.com/www.lyc-lecorbusier-cormeilles.ac-versailles.fr/wp-content/uploads/sites/63/2019/01/blog-logo-animated_720x342.gif?zoom=1.5&fit=720%2C342" , style="width:180px;height:80px;"/>
-	{# <a class="navbar-brand" href="#"> FJT</a> #}
+	<a class="navbar-brand" href="{{path('default_home')}}"><img src="https://i2.wp.com/www.lyc-lecorbusier-cormeilles.ac-versailles.fr/wp-content/uploads/sites/63/2019/01/blog-logo-animated_720x342.gif?zoom=1.5&fit=720%2C342" , style="width:180px;height:80px;"/>
+	</a>
 
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
@@ -10,41 +9,53 @@
 	<div class="collapse navbar-collapse" id="navbarColor02">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active">
-				<a class="nav-link" href="{{path('article_index')}}">&nbsp &nbsp &nbsp ADMIN
-					<span class="sr-only">(current)</span>
+				<a class="nav-link" href="{{path('default_home')}}">&nbsp &nbsp &nbsp  HOME</a>
+				<span class="sr-only">(current)</span>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{path('propos')}}">
+					ABOUT US</a>
+				<span class="sr-only">(current)</span>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{path('contact_new')}}">CONTACT</a>
+			</li>
+			{# Partie admin #}
+			{% if app.user and is_granted('ROLE_ADMIN')%}
+				<li class="nav-item">
+					<a class="nav-link" href="#">CREER UN COMPTE</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{path('article_new')}}">CREER UN ARTICLE</a>
+				</li>
+				<li class="nav-item ">
+					<a class="nav-link" href="{{path('article_index')}}">
+						ADMIN ARTICLE
+					</a>
+				</li>
+			</li>
+			<li class="nav-item ">
+				<a class="nav-link" href="{{path('contact_index')}}">
+					MESSAGES
 				</a>
 			</li>
-			<li class="nav-item active">
-				<a class="nav-link" href="{{path('article_home')}}">&nbsp &nbsp &nbsp ARTICLES
-				</a>
-			</li>
+		{% endif %}
+	</ul>
 
+	{% if app.user %}
+		<ul class="navbar-nav push-right mx-5">
 			<li class="nav-item">
-				<a class="nav-link" href="{{path('propos')}}">A PROPOS</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="{{path('contact')}}">CONTACT</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#">CREER UN COMPTE</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="{{path('article_new')}}">CREER UN ARTICLE</a>
+				<a class="nav-link" href="{{path('app_logout')}}">LOG OUT</a>
 			</li>
 		</ul>
-		{% if app.user %}
-			<ul class="navbar-nav push-right mx-5">
-				<li class="nav-item">
-					<a class="nav-link" href="{{path('app_logout')}}">DECONNEXION</a>
-				</li>
-			</ul>
-		{% else %}
-			<ul class="navbar-nav push-right mx-5">
-				<li class="nav-item">
-					<a class="nav-link" href="{{path('app_login')}}">CONNEXION</a>
-				</li>
-			</ul>
-		{%  endif  %}
+	{% else %}
+		<ul class="navbar-nav push-right mx-5">
+			<li class="nav-item">
+				<a class="nav-link" href="{{path('app_login')}}">LOG IN</a>
+			</li>
+		</ul>
 
-	</div>
-</nav>
+	{% endif %}
+
+
+</div></nav>

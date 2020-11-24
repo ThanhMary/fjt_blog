@@ -2,10 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ArticleRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\User;
+use App\Entity\Comment;
+use App\Entity\Category;
+use App\Entity\Interaction;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -226,18 +230,6 @@ class Article
                 $interaction->setArticle(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCategorys(): ?Category
-    {
-        return $this->categorys;
-    }
-
-    public function setCategorys(?Category $categorys): self
-    {
-        $this->categorys = $categorys;
 
         return $this;
     }

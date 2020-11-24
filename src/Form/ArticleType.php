@@ -20,7 +20,7 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('creationDate', DateTimeType::class)
+            // ->add('creationDate', DateTimeType::class)
             ->add('title')
             ->add('subtitle')
             ->add('content')

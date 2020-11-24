@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Entity\ArticleSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+
 
 /**
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,6 +20,38 @@ class ArticleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Article::class);
     }
+
+    /**
+     * Recupérer des articles avec recherches
+     *
+     * @return Article[]
+     */
+  public function findSearch(ArticleSearch $search): array
+  {
+    $query = $this
+    ->createQueryBuilder('a')
+    ->select('c', 'a')
+    ->join('a.categories', 'c');
+    if (!empty($search->q)) {
+        $query = $query
+            ->andWhere('a.author LIKE :q')
+            ->setParameter('q', "%{$search->q}%");
+    }
+    if (!empty($search->categories)) {
+        $query = $query
+            ->andWhere('c.id IN (:categories)')
+            ->setParameter('categories', $search->categories);
+    }
+//   return $this->paginator->paginate(
+//             $query,
+//             $search->page,
+//             9
+//         );
+
+
+      return $this->findAll();
+  }
+      
 
     // /**
     //  * @return Article[] Returns an array of Article objects
