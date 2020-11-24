@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>
-			{% block title %}Welcome!
-			{% endblock %}
-		</title>
-		{% block stylesheets %}
-			<link rel="stylesheet" href="/css/bootstrap.min.css">
-		{% endblock %}
-	</head>
-	<body>
-		{% include "include/sprite.html.twig" %}
-		{% include "include/navbar.html.twig" %}
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %}Welcome!{% endblock %}</title>
+	{% block stylesheets %}
+		<link rel="stylesheet" href="/css/bootstrap.min.css">
 
-		<div class="container"> {% block body %}{% endblock %}
-			</div>
+		{# Tailwind css #}
+		{{ encore_entry_link_tags('tailwind') }}
 
-			{% block javascripts %}
-				<script src="/js/jquery-3.2.1.slim.min.js"></script>
-				<script src="/js/popper.min.js"></script>
-				<script src="/js/bootstrap.min.js"></script>
-			{% endblock %}
+	{% endblock %}
+</head>
+<body>
+{% include "include/sprite.html.twig" %}
+{% include "include/navbar.html.twig" %}
 
-		</body>
-	</html>
+<div class="container"> {% block body %}{% endblock %}
+</div>
+
+{% block javascripts %}
+	<script src="/js/jquery-3.2.1.slim.min.js"></script>
+	<script src="/js/popper.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+{% endblock %}
+
+</body>
+</html>
+
 
