@@ -2,45 +2,47 @@
 
 {% block body %}
     {# Vue js #}
-        <div id="app">
-             <section class="articles">
-                <div>Filter</div>
-                 <div v-for="(filter, index) in filters">
-                     <div>@{index}</div>
-                    <div @click="update_filter(index)"> @{filter}</div>
-                 </div>
+    <div id="app">
+        <section class="articles">
+            <div>Filter</div>
+            <div class="flex space-x-4">
+            <div v-for="(filter, index) in filters" @click="update_filter(index)">
+                    <div>@{index }</div>
+                    <div> @{filter ? filter : 'désactivé'}</div>
+            </div>
+    </div>
 
-                <h1>Article Aimés</h1>
+            <h1>Article Aimés</h1>
 
-                 <div v-for="liked_article in filter_liked_articles">
-                     <hr>
+            <div v-for="liked_article in filter_liked_articles">
+                <hr>
 
-                    <article class="article">
-                        <h3>@{liked_article.title}</h3>
-                        <h5>@{liked_article.subtitle}</h5>
-                        <div class="metadate">Ecrit le
-                            {# TODO: date good format #}
-                            @{liked_article.creation_date.date }
-                            à
-                            @{liked_article.creation_date.date }
-                            dans la categorie:
-                            @{liked_article.category_name}</div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img :src='liked_article.picture_path' style="width:200px;height:130px;">
-                            </div>
-                            <div class="col-md-8">
-                                @{liked_article.content}
-                                {# TODO: how to make path #}
-{#
-                                <a href="{{path('article_show', {'id':  )}}" class="btn btn-outline-info">... Détail</a>
-#}
-                            </div>
+                <article class="article">
+                    <h3>@{liked_article.title}</h3>
+                    <h5>@{liked_article.subtitle}</h5>
+                    <div class="metadate">Ecrit le
+                        {# TODO: date good format #}
+                        @{liked_article.creation_date.date }
+                        à
+                        @{liked_article.creation_date.time }
+                        dans la categorie:
+                        @{liked_article.category_name}</div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img :src='liked_article.picture_path' style="width:200px;height:130px;">
                         </div>
-                    </article>
+                        <div class="col-md-8">
+                            @{liked_article.content}
+                            {# TODO: how to make path #}
+                            {#
+                                                            <a href="{{path('article_show', {'id':  )}}" class="btn btn-outline-info">... Détail</a>
+                            #}
+                        </div>
                     </div>
-             </section>
-        </div>
+                </article>
+            </div>
+        </section>
+    </div>
     <script>
         window.routes = {
             profile_liked_articles : "{{ path('profile.get_liked_articles') }}"
