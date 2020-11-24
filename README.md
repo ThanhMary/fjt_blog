@@ -1,30 +1,30 @@
 # fjt_blog
 Projet Full-stack Ynov
 
-## Connexions
+## Connections
 
-| user   | admin |
-| ------------- | ------------- |
-|  user@gamil.com |admin@gmail.com |
-| user  | admin |
+|| user   | admin |
+| ------------- | ------------- | ------------- |
+| identifiers |  user@gmail.com |admin@gmail.com |
+| password | user  | admin |
 
 ## Routes
 
-| Sans compte                                   |      User     |        Admin  |
+| Without account                                 |      User     |        Admin  |
 | -------------                                 | ------------- |------------- |
 | [example](http://name_project)  |  | |
 | | | |
 | |   |  |
 | |  | 
 
-## Étapes pour tester :
+## Steps to reproduce :
 
 - 1 )
-Tester pages sans se connecter
+Test pages without connecting
 
 - 2 )
-Tester pages en se connectant en tant q'utilisateur
-- accéder au profil => coir les articles aimées avec les filtres
+Test pages by connecting with user account
+- Access profile => See articles liked with filters
 
 - 3 )
-Tester pages en se connectant en tant q'administrateur
+Test pages by connecting to teh admin
