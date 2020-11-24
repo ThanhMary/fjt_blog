@@ -21,7 +21,7 @@
       </li>
 
       {# Partie admin #}
-      {# {% if app.user and is_granted('ROLE_ADMIN')%} #}
+      {% if app.user and is_granted('ROLE_ADMIN')%} 
        <li class="nav-item">
         <a class="nav-link" href="#">CREER UN COMPTE</a>
       </li>
@@ -37,7 +37,7 @@
         <a class="nav-link" href="{{path('contact_index')}}"> MESSAGES
       </a>
       </li>
-        {# {% endif %} #}
+         {% endif %} 
     </ul>
     
    {% if app.user %}

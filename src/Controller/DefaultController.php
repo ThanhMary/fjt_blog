@@ -22,18 +22,18 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="default")
      */
-    // public function index(ArticleRepository $articleRepository, Request $request): Response
-    // {
-    //     $data = new ArticleSearch();
-    //     $data->page = $request->get('page', 1);
-    //     $form = $this->createForm(SearchForm::class, $data);
-    //     $form->handleRequest($request);
-    //     $articles = $articleRepository->findSearch($data);
-    //     return $this->render('default/home.html.twig', [
-    //         'articles' => $articles,
-    //         'form' => $form->createView()
-    //     ]);
-    // }
+    public function index(ArticleRepository $articleRepository, Request $request): Response
+    {
+        $data = new ArticleSearch();
+        $data->page = $request->get('page', 1);
+        $form = $this->createForm(SearchForm::class, $data);
+        $form->handleRequest($request);
+        $articles = $articleRepository->findSearch($data);
+        return $this->render('default/home.html.twig', [
+            'articles' => $articles,
+            'form' => $form->createView()
+        ]);
+    }
 
     /**
      * @Route("/propos", name="propos")
@@ -52,15 +52,13 @@ class DefaultController extends AbstractController
     public function home(PaginatorInterface $paginator, Request $request): Response
     {
         
-        // Méthode findBy qui permet de récupérer les données avec des critères de filtre et de tri
             $donnees = $this->getDoctrine()->getRepository(Article::class)->findBy([],['creationDate' => 'desc']);
             $articles = $paginator->paginate(
-            $donnees, // Requête contenant les données à paginer (ici nos articles)
+            $donnees, 
             $request->query->getInt('page', 1), 
-              5 ); // Nombre de résultats par page
-        
-        return $this->render('default/home.html.twig', [
-            'articles' => $articles,
+              5 ); 
+             return $this->render('default/home.html.twig', [
+             'articles' => $articles,
         ]);
     }
 
@@ -81,9 +79,9 @@ class DefaultController extends AbstractController
             $manager->persist($comment);
             $manager->flush();
 
-            return $this->redirectToRoute('article_detail', ['id'=>$article->getId()]);
+            return $this->redirectToRoute('default_show', ['id'=>$article->getId()]);
         }
-        return $this->render('article/detail.html.twig', [
+        return $this->render('default/show.html.twig', [
             'article'=>$article,
             'Form'=>$form->createView()
         ]);
