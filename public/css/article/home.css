@@ -1,0 +1,42 @@
+a {
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+.article {
+  padding: 10px;
+}
+.link:hover {
+  /*color: #bdaa77;*/
+  color: #21a55a;
+  text-decoration: none;
+}
+.socials {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.social {
+  width: 125px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.social_tag {
+  width: 69%;
+}
+.social_icon {
+  width: 39%;
+  height: 100px;
+}
+@media screen and (min-width: 1024px) {
+  .social {
+    width: 100px;
+  }
+  .social_icon {
+    width: 70px;
+    height: 30px;
+    margin-left: 5px;
+  }
+}

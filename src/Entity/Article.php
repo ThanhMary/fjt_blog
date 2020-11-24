@@ -2,10 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ArticleRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\User;
+use App\Entity\Comment;
+use App\Entity\Category;
+use App\Entity\Interaction;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -46,10 +50,6 @@ class Article
      */
     private $state;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
-     */
-    private $category;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -57,19 +57,27 @@ class Article
     private $picturePath;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="article_id")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="article")
      */
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Interaction::class, mappedBy="article_id")
+     * @ORM\OneToMany(targetEntity=Interaction::class, mappedBy="article")
      */
     private $interactions;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles" ,cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $author;
+    private $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $autor;
+
 
     public function __construct()
     {
@@ -226,14 +234,14 @@ class Article
         return $this;
     }
 
-    public function getAuthor(): ?string
+    public function getAutor(): ?User
     {
-        return $this->author;
+        return $this->autor;
     }
 
-    public function setAuthor(string $author): self
+    public function setAutor(?User $user): self
     {
-        $this->author = $author;
+        $this->autor = $user;
 
         return $this;
     }

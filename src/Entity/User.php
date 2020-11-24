@@ -1,6 +1,11 @@
 <?php
+
 namespace App\Entity;
 
+use App\Entity\Role;
+use App\Entity\Article;
+use App\Entity\Comment;
+use App\Entity\Interaction;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
@@ -10,6 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
+
 class User implements UserInterface
 {
     /**
@@ -46,32 +52,38 @@ class User implements UserInterface
     private $phoneNumber;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user_id")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
      */
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Interaction::class, mappedBy="user_id")
+     * @ORM\OneToMany(targetEntity=Interaction::class, mappedBy="user")
      */
     private $interactions;
 
     /**
+
      * @var array|string[]
      */
     private $roles = [];
 
     /**
-     * @var Collection
-     * @ORM\ManyToMany(targetEntity=Role::class, inversedBy="users", cascade={"persist", "remove"})
-     * @ORM\JoinTable(name="role_user")
+     * @ORM\ManyToMany(targetEntity=Role::class, inversedBy="users")
      */
     private $userRoles;
 
-    
+    /**
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="autor")
+     */
+    private $articles;
+
 
     public function __construct()
     {
+        $this->comments = new ArrayCollection();
+        $this->interactions = new ArrayCollection();
         $this->userRoles = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -91,7 +103,7 @@ class User implements UserInterface
         return $this;
     }
 
-     /**
+    /**
      * @see UserInterface
      */
     public function getPassword(): string
@@ -140,7 +152,7 @@ class User implements UserInterface
 
         return $this;
     }
-  /**
+    /**
      * @return Collection|Comment[]
      */
     public function getComments(): Collection
@@ -200,14 +212,12 @@ class User implements UserInterface
         return $this;
     }
 
-  
-
     /**
      * @return array|string[]
      */
     public function getRoles(): array
     {
-        $roles = $this->userRoles->map(function($role){
+        $roles = $this->userRoles->map(function ($role) {
             return $role->getName();
         })->toArray();
         // guarantee every user at least has ROLE_USER
@@ -222,7 +232,7 @@ class User implements UserInterface
      * @param  array  $roles  string[]
      *
      * @return  self
-     */ 
+     */
     public function setRoles(array $roles)
     {
         $this->roles = $roles;
@@ -256,7 +266,37 @@ class User implements UserInterface
 
         return $this;
     }
-  /**
+
+    /**
+     * @return Collection|Article[]
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Article $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->removeElement($article)) {
+            // set the owning side to null (unless already changed)
+            if ($article->getUser() === $this) {
+                $article->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+    /**
      * @see UserInterface
      */
     public function getSalt()
@@ -275,9 +315,5 @@ class User implements UserInterface
 
     public function getUsername()
     {
-        
     }
-   
-
 }
-

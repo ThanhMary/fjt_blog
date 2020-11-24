@@ -1,42 +1,47 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        {% endblock %}
-    </head>
-    <style>
-        .message {
-        border: 5px ;
-        width: 500px;
-        height: 100px;
-        background-color: #D5F5E3;    
-        text-align: center;
-        }
-</style>
-    <body>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			<link rel="stylesheet" href="/css/bootstrap.min.css">
+			{{ encore_entry_link_tags('tailwind') }}
+		{% endblock %}
+		<meta charset="UTF-8">
+	</head>
+	<style>
+		.message {
+			border: 5px;
+			width: 500px;
+			height: 100px;
+			background-color: #D5F5E3;
+			text-align: center;
+		}
+	</style>
+	<body>
+		{% include "include/sprite.html.twig" %}
+		{% include "include/navbar.html.twig" %}
+		<div class="container">
+			{% for label,messages in app.flashes %}
+				{% for message in messages %}
+					<center>
+						<div class="message"><br>
+							<p>{{message}}</p>MERCI BIEN
+						</div>
+					</center>
+				{% endfor %}
+			{% endfor %}
+		</div>
+		<div class="container-fluid"> {% block body %}{% endblock %}
+			</div>
+			{% block javascripts %}
+				<script src="/js/jquery-3.2.1.slim.min.js"></script>
+				<script src="/js/popper.min.js"></script>
+				<script src="/js/bootstrap.min.js"></script>
+			{% endblock %}
 
-     {% include "include/navbar.html.twig" %}
-     <div class="container">
-        {% for label,messages in app.flashes %}
-            {% for message in messages %}
-           <center> <div class="message"><br>
-                <p>{{message}}</p>MERCI BIEN 
-            </div></center>
-            {% endfor %}
-        {% endfor %}
-    </div>
-       <div class="container-fluid">
-            {% block body %}
-            {% endblock %}
-        </div>
-        {% block javascripts %}
-        <script src="/js/jquery-3.2.1.slim.min.js"></script>
-        <script src="/js/popper.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
-        {% endblock %}
-  
-    </body>
-</html>
+		</body>
+	</html>

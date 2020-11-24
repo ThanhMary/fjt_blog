@@ -1,0 +1,26 @@
+{
+    "devDependencies": {
+        "@symfony/webpack-encore": "^0.31.0",
+        "core-js": "^3.0.0",
+        "postcss": "^8.1.10",
+        "postcss-loader": "^4.1.0",
+        "regenerator-runtime": "^0.13.2",
+        "vue": "^2.6.12",
+        "vue-loader": "^15.9.5",
+        "vue-template-compiler": "^2.6.12",
+        "webpack-notifier": "^1.10.1"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
+    "dependencies": {
+        "autoprefixer": "^10.0.2",
+        "moment": "^2.29.1",
+        "tailwindcss": "^2.0.1"
+    }
+}

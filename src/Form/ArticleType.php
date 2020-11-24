@@ -27,18 +27,14 @@ class ArticleType extends AbstractType
             ->add('content')
             ->add('state', ChoiceType::class, [
                 'choices' => [
-                    'Public' => 1,
-                    'Personnel' => 2,
+                    'Public' => true,
+                    'Personnel' => false,
                 ],
             ])
             ->add('picturePath', FileType::class, [
                 'label' => 'Main picture ',
                 'mapped' => false,
-                // make it optional so you don't have to re-upload the PDF file
-                // every time you edit the Product details
                 'required' => false,
-                // unmapped fields can't define their validation using annotations
-                // in the associated entity, so you can use the PHP constraint classes
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
@@ -46,7 +42,6 @@ class ArticleType extends AbstractType
                             'image/jpeg',
                             'image/png',
                             'image/svg',
-                            
                         ],
                         'mimeTypesMessage' => 'Please upload a valid picture',
                     ])
@@ -59,8 +54,8 @@ class ArticleType extends AbstractType
                 /*'choice_attr' => function ($choice, $key, $value) {
                     return ['data-price' => $choice->getPrice()];
                 }*/
-            ]);
-            // ->add('save', SubmitType::class);
+            ])
+            ->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

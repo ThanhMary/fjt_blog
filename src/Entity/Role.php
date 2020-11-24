@@ -6,6 +6,7 @@ use App\Repository\RoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * @ORM\Entity(repositoryClass=RoleRepository::class)
  */
@@ -71,9 +72,9 @@ class Role
 
     public function removeUser(User $user): self
     {
-        $this->users->removeElement($user);
-
+        if ($this->users->removeElement($user)) {
+            $user->removeUserRole($this);
+        }
         return $this;
     }
 }
-
