@@ -4,17 +4,17 @@
     {# Vue js #}
     <div id="app">
         <section class="articles">
-            <div>Filter</div>
-            <div class="flex space-x-4">
-            <div v-for="(filter, index) in filters" @click="update_filter(index)">
+            <div class="h1">Filtres</div>
+            <div class="flex space-x-4 ">
+                <div class="w-32 bg-blue-200 px-4" v-for="(filter, index) in filters" @click="update_filter(index)">
                     <div>@{index }</div>
-                    <div> @{filter ? filter : 'désactivé'}</div>
+                    <div class="bg-blue-300 cursor-pointer p-1 mb-2 hover:bg-blue-400"> @{filter ? filter : 'désactivé'}</div>
+                </div>
             </div>
-    </div>
 
-            <h1>Article Aimés</h1>
+            <h1 class="h1">Article Aimés</h1>
 
-            <div v-for="liked_article in filter_liked_articles">
+            <div class="p-2 mb-2 border-black border-4 border-b-8" v-for="liked_article in filter_liked_articles">
                 <hr>
 
                 <article class="article">

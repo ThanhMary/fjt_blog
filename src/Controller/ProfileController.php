@@ -81,6 +81,7 @@ class ProfileController extends AbstractController
                 'interaction_type' => 1
             ]);
 
+        /* Create liked articles array */
         $liked_articles_arr = [];
         foreach ($liked_articles as $liked_article) {
             $article = $liked_article->getArticle();
@@ -97,16 +98,6 @@ class ProfileController extends AbstractController
         }
 
         return new JsonResponse($liked_articles_arr);
-        /* Create liked articles array */
-        $response = new Response(json_encode($this->serializer->normalize($liked_articles, null)));
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
-
-        /*        return json_encode($liked_articles);*/
-        /*        return $this->render('profile/liked_articles.html.twig', [
-                    'liked_articles' => $liked_articles
-                ]);*/
     }
 
     /**
@@ -115,24 +106,19 @@ class ProfileController extends AbstractController
 
     public function liked_articles_page()
     {
+        return $this->render('profile/articles.html.twig', [
+            'page' => 'liked'
+        ]);
+    }
 
-        $user = $this->get_current_user();
+    /**
+     * @Route("/profile/shared_articles", name="profile.shared_articles")
+     */
 
-        /* Last articles */
-        $liked_articles = $this->getDoctrine()
-            ->getRepository(Interaction::class)
-            ->findBy([
-                'user' => $user,
-                'interaction_type' => 1
-            ]);
-
-        $liked_articles_arr = [];
-        foreach ($liked_articles as $liked_article) {
-            array_push($liked_articles_arr, $liked_article->getArticle());
-        }
-
-        return $this->render('profile/liked_articles.html.twig', [
-            'liked_articles' => $liked_articles
+    public function shared_articles_page()
+    {
+        return $this->render('profile/articles.html.twig', [
+            'page' => 'shared'
         ]);
     }
 }
