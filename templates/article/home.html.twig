@@ -30,16 +30,18 @@
 								{# <a href="{{path('', {'id': article.id})}}" class="btn btn-outline-info">... Lire la suite</a> #}
 							</div>
 						</div>
+
 						<div class="socials">
-							<div class="social">
+							<div onclick="" class="social" ">
 								<span class="social_tag">
-									J'aime
+
+									{{ article.interactions |filter(v => v.interactionType == 0 )|length }}
+									{# an error with   constant('App\\Entity\\Article::LIKE')) |length  }}     #}
+
 								</span>
 								<svg class="social_icon">
 									<use xlink:href="#like"></use>
 								</svg>
-
-
 							</div>
 							<div class="social">
 								<span class="social_tag">
@@ -49,29 +51,38 @@
 									<use xlink:href="#comment"></use>
 								</svg>
 							</div>
-
-							{% for comment in article.comments %}
-								<div>
-									<div>
-										{{comment.content}}
-									</div>
-									<div>
-										{{comment.date |date('Y-m-d H:i:s') }}
-									</div>
-								</div>
-							{% endfor %}
-							{% if app.user %}
-								FORM COMMENTAIRE
-							{% else %}
-								<a href="{{path('app_login')}}">Veuillez vous connectez afin de laisser un commentaire</a>
-
-							{% endif %}
-
 						</div>
+						{% for comment in article.comments %}
+							<div>
+								<div>
+									{{comment.date |date('Y-m-d H:i:s') }}
+								</div>
+								<div>
+									<span>{{comment.user.firstname}}</span>
+									<span>{{comment.user.lastname}}</span>
+								</div>
+								<div>
+									{{comment.content}}
+								</div>
+							</div>
+						{% endfor %}
+						{% if app.user %}
+							FORM COMMENTAIRE
+						{% else %}
+							<a href="{{path('app_login')}}">Veuillez vous connectez afin de laisser un commentaire</a>
+
+						{% endif %}
 					</article>
 
 				{% endfor %}
 			</section>
+			<script>
+				async function like({url, article_id, user_id}) {
+let response = await fetch(url, {body {
+article_id
+}});
+}
+			</script>
 		</div>
 	{% endblock %}
 	{% block stylesheets %}
