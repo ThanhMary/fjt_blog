@@ -1,50 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Article index{% endblock %}
+{% block title %}Article index
+{% endblock %}
 
 {% block body %}
-<div style='border: 5px; padding: 20px; background-color: #D5F5E3;' >
-    <h3>All Articles</h3>
+	<div style='border: 5px; padding: 20px; background-color: #D5F5E3;'>
+		<h3>All Articles</h3>
 
-    <table class="table table-bordered table-hover table-responsive-lg">
-        <thead>
-            <tr>
-              
-                <th>Creation_date</th>
-                <th>Title</th>
-                <th>Subtitle</th>
-                 <th>Author</th>
-                <th>Content</th>
-                <th>State</th>
-                <th>Picture_path</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for article in articles %}
-            <tr>
-                
-                <td>{{ article.creationDate ? article.creationDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ article.title }}</td>
-                <td>{{ article.subtitle }}</td>
-                <td>{{ article.author }}</td>
-                <td>{{ article.content }}</td>
-                <td>{{ article.state ? 'Yes' : 'No' }}</td>
-                <td>{{ article.picturePath }}</td>
-                <td>
-                    <a href="{{ path('article_show', {'id': article.id}) }}">Show</a>
-                    <a href="{{ path('article_edit', {'id': article.id}) }}">Edit</a>
-                    <a href="{{ path('article_delete', {'id': article.id}) }}">Delete</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+		<table class="table table-bordered table-hover table-responsive-lg">
+			<thead>
+				<tr>
 
-  
-    </div>
+					<th>Creation_date</th>
+					<th>Title</th>
+					<th>Subtitle</th>
+					<th>Author</th>
+					<th>Content</th>
+					<th>State</th>
+					<th>Picture_path</th>
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for article in articles %}
+					<tr>
+
+						<td>{{ article.creationDate ? article.creationDate|date('Y-m-d H:i:s') : '' }}</td>
+						<td>{{ article.title }}</td>
+						<td>{{ article.subtitle }}</td>
+						{% if article.autor != null %}
+							<td>{{ article.autor.firstname }}
+								{{ article.autor.lastname }}</td>
+						{% else %}
+							<td>unregistered user</td>
+						{% endif %}
+
+
+						<td>{{ article.content }}</td>
+						<td>{{ article.state ? 'Yes' : 'No' }}</td>
+						<td>{{ article.picturePath }}</td>
+						<td>
+							<a href="{{ path('article_show', {'id': article.id}) }}">Show</a>
+							<a href="{{ path('article_edit', {'id': article.id}) }}">Edit</a>
+							<a href="{{ path('article_delete', {'id': article.id}) }}">Delete</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="8">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+
+	</div>
 {% endblock %}

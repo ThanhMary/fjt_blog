@@ -40,9 +40,8 @@ class ContactController extends AbstractController
             $entityManager->persist($contact);
             $entityManager->flush();
 
-            $this->addFlash('success','Votre message a été bien envoyé aux membres du FJT_BLOG.');
-             return $this->redirectToRoute("default_home");
-          
+            $this->addFlash('success', 'Votre message a été bien envoyé aux membres du FJT_BLOG.');
+            return $this->redirectToRoute("default_home");
         }
 
         return $this->render('contact/new.html.twig', [
@@ -86,7 +85,7 @@ class ContactController extends AbstractController
      */
     public function delete(Request $request, Contact $contact): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$contact->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $contact->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($contact);
             $entityManager->flush();

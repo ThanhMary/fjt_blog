@@ -23,7 +23,6 @@ class ArticleType extends AbstractType
             // ->add('creationDate', DateTimeType::class)
             ->add('title')
             ->add('subtitle')
-            ->add('author')
             ->add('content')
             ->add('state', ChoiceType::class, [
                 'choices' => [
