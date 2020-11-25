@@ -1,5 +1,4 @@
 # fjt_blog
-Projet Full-stack Ynov
 
 # [Link Report](https://docs.google.com/document/d/1cCGVpjxGDtKQDu-Muiq8BVfK6UllhJbDCEEcH2SbcU4/edit?usp=sharing)
 Class diagramm and other additional files are in [/public/report_files/](https://github.com/ThanhMary/fjt_blog/tree/main/public/report_files)
