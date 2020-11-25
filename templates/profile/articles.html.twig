@@ -12,31 +12,35 @@
                 </div>
             </div>
 
-            <h1 class="h1">Article Aimés</h1>
+            <h1  class="h1">
+                <span v-if="page === 'liked'">Article Aimés</span>
+                <span v-else-if="page === 'shared'">Article Commentés</span>
+                <span v-else >Articles </span>
+            </h1>
 
-            <div class="p-2 mb-2 border-black border-4 border-b-8" v-for="liked_article in filter_liked_articles">
+            <div class="p-2 mb-2 border-black border-4 border-b-8" v-for="article in filter_liked_articles">
                 <hr>
 
                 <article class="article">
-                    <h3>@{liked_article.title}</h3>
-                    <h5>@{liked_article.subtitle}</h5>
+                    <h3>@{article.title}</h3>
+                    <h5>@{article.subtitle}</h5>
                     <div class="metadate">Ecrit le
-                        {# TODO: date good format #}
-                        @{liked_article.creation_date.date }
+                         TODO: date good format
+                        @{article.creation_date.date }
                         à
-                        @{liked_article.creation_date.time }
+                        @{article.creation_date.time }
                         dans la categorie:
-                        @{liked_article.category_name}</div>
+                        @{article.category_name}</div>
                     <div class="row">
                         <div class="col-md-4">
-                            <img :src='liked_article.picture_path' style="width:200px;height:130px;">
+                            <img :src='article.picture_path' style="width:200px;height:130px;">
                         </div>
                         <div class="col-md-8">
-                            @{liked_article.content}
-                            {# TODO: how to make path #}
-                            {#
-                                                            <a href="{{path('article_show', {'id':  )}}" class="btn btn-outline-info">... Détail</a>
-                            #}
+                            @{article.content}
+                             {#TODO: how to make path #}
+
+                                                            {#<a href="{{path('article_show', {'id':  )}}" class="btn btn-outline-info">... Détail</a>#}
+
                         </div>
                     </div>
                 </article>
@@ -45,8 +49,9 @@
     </div>
     <script>
         window.routes = {
-            profile_liked_articles : "{{ path('profile.get_liked_articles') }}"
-        }
+            profile_get_articles :  '{{ path('profile.get_'~page~'_articles') }}'
+        };
+        window.page = "{{ page }}"
     </script>
     {# VUE JS #}
     {{ encore_entry_script_tags('app') }}

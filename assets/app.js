@@ -19,23 +19,26 @@ var app = new Vue({
     delimiters: ['@{', '}'],
     data: function(){
         return {
+            page: page,
             routes: routes,
             filters: {
                 author: null,
                 date: null,
                 title: null,
             },
-            liked_articles: [],
+            articles: [],
         }
     },
     beforeCreate: async function () {
-        await fetch(routes.profile_liked_articles)
+        cl('tets')
+        cl(routes.profile_get_articles)
+        await fetch(routes.profile_get_articles)
             .then(res => res.json())
-            .then(res => this.liked_articles = res)
+            .then(res => this.articles = res)
             .catch(error => alert("Erreur : " + error));
 
         /* Make dates */
-        this.liked_articles = this.liked_articles.map(article => {
+        this.articles = this.articles.map(article => {
                 let date_time = article.creation_date.date;
                 let date = moment(date_time).format('DD MM YYYY');
                 let time = moment(date_time).format('hh:mm:ss');
@@ -44,11 +47,10 @@ var app = new Vue({
             }
         );
 
-        cl(this.liked_articles)
     },
     computed: {
         filter_liked_articles: function () {
-            let articles = this.liked_articles;
+            let articles = this.articles;
 
             /** Filter functions */
             const sort_alphabetical = (a, b) => {
