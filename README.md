@@ -12,10 +12,10 @@ Projet Full-stack Ynov
 
 | Without account                                 |      User     |        Admin  |
 | -------------                                 | ------------- |------------- |
-| [example](http://name_project)  |  | |
-| | | |
-| |   |  |
-| |  | 
+| [/](http://blog.com) | [/profile](http://blog.com/profile) |[/article/new](http://blog.com/article/new) |
+| [/propos](http://blog.com/propos) | [/profile](http://blog.com/profile) |[/article/](http://blog.com/article) |
+| [/contact/new](http://blog.com/contact/new) | [/profile](http://blog.com/profile/liked_articles) | [/contact/](http://blog.com/contact) |
+| [/login](http://blog.com/login) |  | 
 
 ## Steps to reproduce :
 
