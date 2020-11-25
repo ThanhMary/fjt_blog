@@ -7,14 +7,14 @@
 				<h3 style="color: white;">Recherche</h3>
 
 				{# {{ form_start(form, {attr: {class: 'filter js-filter-form'}}) }} 
-																																				    <div class="spinner-border js-loading" role="status" aria-hidden="true" style="display: none">
-																																				    <span class="sr-only">Loading...</span>  </div>
-																																				
-																																				            {{ form_row(form.q) }}
-																																				           <h4>Catégories</h4>
-																																				            {{ form_row(form.categories) }}
-																																				            <button type="submit" class="btn btn-primary w-100">Filtrer</button>
-																																				            {{ form_end(form) }} #}
+																																																    <div class="spinner-border js-loading" role="status" aria-hidden="true" style="display: none">
+																																																    <span class="sr-only">Loading...</span>  </div>
+																																																
+																																																            {{ form_row(form.q) }}
+																																																           <h4>Catégories</h4>
+																																																            {{ form_row(form.categories) }}
+																																																            <button type="submit" class="btn btn-primary w-100">Filtrer</button>
+																																																            {{ form_end(form) }} #}
 			</div>
 
 			<div class="col-9" style='border: 5px; padding: 20px; background-color: #D5F5E3;'>
@@ -36,7 +36,7 @@
 								{% endif %}
 								à
 								{{article.creationDate | date('H:i')}}, 
-																																																																								                Categorie:
+																																																																																																                Categorie:
 								{{article.category.name}}
 							</div>
 							<div class="row">
@@ -48,6 +48,27 @@
 									{# <a href="{{path('default_show', {'id': article.id})}}" class="btn btn-outline-info">... Lire la suite</a> #}
 								</div>
 							</div>
+							<div class="socials">
+								<div onclick="" class="social" ">
+									<span class="social_tag">
+
+										{{ article.interactions |filter(v => v.interactionType == 0 )|length }}
+										{# an error with   constant('App\\Entity\\Article::LIKE')) |length  }}     #}
+
+									</span>
+									<svg class="social_icon">
+										<use xlink:href="#like"></use>
+									</svg>
+								</div>
+								<div class="social">
+									<span class="social_tag">
+										Partager
+									</span>
+									<svg class="social_icon">
+										<use xlink:href="#comment"></use>
+									</svg>
+								</div>
+							</div>
 
 						</article>
 					{% endfor %}
@@ -56,8 +77,8 @@
 
 				<hr>
 				{# <div class="pagination float-center"> 
-							  {{knp_pagination_render(articles)}}
-						        </div> #}
+																			  {{knp_pagination_render(articles)}}
+																		        </div> #}
 
 
 			</div>
@@ -67,4 +88,8 @@
 
 
 	</div>
+{% endblock %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link href="{{ asset('css/article/home.css') }}" rel="stylesheet"/>
 {% endblock %}
