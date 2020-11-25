@@ -2,6 +2,7 @@
 Projet Full-stack Ynov
 
 # [Compte rendu](https://docs.google.com/document/d/1cCGVpjxGDtKQDu-Muiq8BVfK6UllhJbDCEEcH2SbcU4/edit?usp=sharing)
+Class diagramm and other additional files are in /public/report_files/
 
 ## Connections
 
