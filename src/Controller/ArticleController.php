@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
@@ -134,18 +135,25 @@ class ArticleController extends AbstractController
         ]);
     }
     /**
-     * @Route("/{id}", name="article_like", methods={"POST"})
+     * @Route("/{id}/like", name="article_like_add",options={"expose"=true}, methods={"POST"})
      */
     public function like(Request $request, Article $article): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
+        return new JsonResponse('coucou');
+        //permite accesss post body
+        $parameters = json_decode($request->getContent(), true);
 
-        $like = new Interaction();
-        $like->setUser($this->getUser())
-            ->setArticle($article)
-            ->setInteractionType(Interaction::LIKE);
+        if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
+            $like = new Interaction();
+            $like->setUser($this->getUser())
+                ->setArticle($article)
+                ->setInteractionType(Interaction::LIKE);
 
-        $entityManager->flush();
+            $entityManager->flush();
+        }
+
+
 
         return $this->redirectToRoute('article_index');
     }
@@ -191,7 +199,6 @@ class ArticleController extends AbstractController
             $entityManager->remove($article);
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('article_index');
     }
 }

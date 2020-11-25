@@ -7,14 +7,14 @@
 				<h3 style="color: white;">Recherche</h3>
 
 				{# {{ form_start(form, {attr: {class: 'filter js-filter-form'}}) }} 
-																																																    <div class="spinner-border js-loading" role="status" aria-hidden="true" style="display: none">
-																																																    <span class="sr-only">Loading...</span>  </div>
-																																																
-																																																            {{ form_row(form.q) }}
-																																																           <h4>Catégories</h4>
-																																																            {{ form_row(form.categories) }}
-																																																            <button type="submit" class="btn btn-primary w-100">Filtrer</button>
-																																																            {{ form_end(form) }} #}
+																																																								    <div class="spinner-border js-loading" role="status" aria-hidden="true" style="display: none">
+																																																								    <span class="sr-only">Loading...</span>  </div>
+																																																								
+																																																								            {{ form_row(form.q) }}
+																																																								           <h4>Catégories</h4>
+																																																								            {{ form_row(form.categories) }}
+																																																								            <button type="submit" class="btn btn-primary w-100">Filtrer</button>
+																																																								            {{ form_end(form) }} #}
 			</div>
 
 			<div class="col-9" style='border: 5px; padding: 20px; background-color: #D5F5E3;'>
@@ -36,7 +36,7 @@
 								{% endif %}
 								à
 								{{article.creationDate | date('H:i')}}, 
-																																																																																																                Categorie:
+																																																																																																																                Categorie:
 								{{article.category.name}}
 							</div>
 							<div class="row">
@@ -49,7 +49,9 @@
 								</div>
 							</div>
 							<div class="socials">
-								<div onclick="" class="social" ">
+
+								
+								<div onclick="like({{article.id}} , {{ app.user != null? app.user.id : 'null' }} )" class="social" ">
 									<span class="social_tag">
 
 										{{ article.interactions |filter(v => v.interactionType == 0 )|length }}
@@ -77,12 +79,35 @@
 
 				<hr>
 				{# <div class="pagination float-center"> 
-																			  {{knp_pagination_render(articles)}}
-																		        </div> #}
+				 {{knp_pagination_render(articles)}}
+				</div> #}
 
 
 			</div>
+			<script>
+				async function like(article_id, user_id) {
+					var url = Routing.generate('article_like_add',
+						{
+							'id': article_id
+						});
+					console.log(url)
+					let content = {
+						user: user_id,
+					}
+					//if (user_id != null) {
+					let response = await fetch(url,
+						{
+							method: "POST",
+							body: JSON.stringify(content)
+						});
+					liked = await response.json();
+					console.log(liked);
+					//	}else{
 
+					//	}
+
+				}
+			</script>
 
 		</div>
 
