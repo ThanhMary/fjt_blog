@@ -1,6 +1,8 @@
 # fjt_blog
 Projet Full-stack Ynov
 
+# [Compte rendu](https://docs.google.com/document/d/1cCGVpjxGDtKQDu-Muiq8BVfK6UllhJbDCEEcH2SbcU4/edit?usp=sharing)
+
 ## Connections
 
 || user   | admin |
