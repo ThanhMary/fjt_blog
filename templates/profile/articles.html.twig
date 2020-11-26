@@ -1,58 +1,72 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {# Vue js #}
-    <div id="app">
-        <section class="articles">
+    <div class="flex">
+        <div>
+            <ul>
+                <li><a href="{{ path('profile') }}">Profil</a></li>
+                <li><a href="{{ path('profile.liked_articles') }}">Articles aimés</a></li>
+                <li><a href="{{ path('profile.shared_articles') }}">Articles partagés</a></li>
+                <li><a href="{{ path('profile.comment_articles') }}">Articles commentés</a></li>
+            </ul>
+        </div>
+        {# Vue js #}
+        <div id="app">
+            <section class="articles">
 
-            <h1 class="h1">
-                <span v-if="page === 'liked'">Article Likés</span>
-                <span v-else-if="page === 'shared'">Article Partagés</span>
-                <span v-else-if="page === 'comment'">Article Commentés</span>
-                <span v-else >Articles</span>
-            </h1>
+                <h1 class="h1">
+                    <span v-if="page === 'liked'">Article Likés</span>
+                    <span v-else-if="page === 'shared'">Article Partagés</span>
+                    <span v-else-if="page === 'comment'">Article Commentés</span>
+                    <span v-else >Articles</span>
+                </h1>
 
-            <div class="lg:flex lg:space-between">
-                <div class="h2 lg:mr-2">Recherche sur les catégories</div>
-                <input v-model="search" class="search border-2 border-black lg:h-2/3 mr-2 align-bottom" type="text">
-                <div class="h2 lg:mr-2">Filtres</div>
-                <div class="flex space-x-4 mb-4">
-                    <div class="w-32 bg-blue-200 px-4" v-for="(filter, index) in filters" @click="update_filter(index)">
-                        <div>@{index }</div>
-                        <div class="bg-blue-300 cursor-pointer p-1 mb-2 hover:bg-blue-400"> @{filter ? filter : 'désactivé'}</div>
+                <div class="lg:flex lg:space-between">
+                    <div class="h2 lg:mr-2">Recherche sur les catégories</div>
+                    <input v-model="search" class="search border-2 border-black lg:h-2/3 mr-2 align-bottom" type="text">
+                    <div class="h2 lg:mr-2">Filtres</div>
+                    <div class="flex space-x-4 mb-4">
+                        <div class="w-32 bg-blue-200 px-4" v-for="(filter, index) in filters" @click="update_filter(index)">
+                            <div>@{index }</div>
+                            <div class="bg-blue-300 cursor-pointer p-1 mb-2 hover:bg-blue-400"> @{filter ? filter : 'désactivé'}</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div v-if="filter_articles.length !== 0" >
-                <div class="p-2 mb-2 border-black border-4 border-b-8" v-for="article in filter_articles">
-                    <hr>
+                <div v-if="filter_articles.length !== 0" >
+                    <div class="p-2 mb-2 border-black border-4 border-b-8" v-for="article in filter_articles">
+                        <hr>
 
-                    <article class="article">
-                        <h3 class="h3">@{article.title}</h3>
-                        <h4 class="h4">@{article.subtitle}</h4>
-                        <div class="metadate">Ecrit le
-                            @{article.creation_date.date }
-                            à
-                            @{article.creation_date.time }
-                        </div>
-                        <div class="font-weight-bold">
-                            @{article.category_name.toUpperCase()}
-                        </div>
-                        <div>
-                            <div class="flex">
-                                <img :src='article.picture_path' style="width:200px;height:130px;">
-                                <div>@{article.content}</div>
+                        <article class="article">
+                            <h3 class="h3">@{article.title}</h3>
+                            <h4 class="h4">@{article.subtitle}</h4>
+                            <div class="metadate">Ecrit le
+                                @{article.creation_date.date }
+                                à
+                                @{article.creation_date.time }
+                            </div>
+                            <div class="font-weight-bold">
+                                @{article.category_name.toUpperCase()}
                             </div>
                             <div>
+                                <div class="flex">
+                                    <img :src='article.picture_path' style="width:200px;height:130px;">
+                                    <div>@{article.content}</div>
+                                </div>
+                                <div>
 
+<<<<<<< HEAD
                                 <div><a :href="'/article/' + article.id" class="border-2 border-black p-2 m-4 bg-blue-500">... Détails</a></div>
+=======
+                                    <div><a :href="'/article/' + article.id" class="border-2 border-black p-2 m-4 bg-blue-500">... Détail</a></div>
+                                </div>
+>>>>>>> Alex
                             </div>
-                        </div>
-                    </article>
+                        </article>
+                    </div>
                 </div>
-            </div>
-            <div class="text-red-800" v-else>Pas d'articles trouvés pour cette recherche de catégories </div>
-        </section>
+                <div class="text-red-800" v-else>Pas d'articles trouvés pour cette recherche de catégories </div>
+            </section>
+        </div>
     </div>
     <script>
         window.routes = {
