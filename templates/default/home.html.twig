@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link href="{{ asset('css/article/home.css') }}" rel="stylesheet"/>
+{% endblock %}
 {% block body %}
 	<div class="container">
 		<div class="row">
@@ -82,9 +85,34 @@
 				{# <div class="pagination float-center"> 
 				 {{knp_pagination_render(articles)}}
 				</div> #}
-
-
 			</div>
+			<div id="myModal" class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+					  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					  </button>
+					</div>
+					<div class="modal-body">
+					<div class="row w-100 d-flex flex-column">
+						<div class="col-12">
+							<img class="w-100" src="{{ asset('images/social.jpg') }}" alt="Symfony!"/>
+						</div>
+						<div class="">
+							vous êtes nouveaux parmis nous rejoignez nous via les bouton ci-dessous
+						</div>
+					</div>
+					</div>
+					<div class="modal-footer">
+					  <button  class="btn btn-secondary" data-dismiss="modal">Close</button>
+					  <a  href="{{path('app_login')}}" class="btn btn-primary">Se connectez</a>
+					  <a  href="#" class="btn btn-primary">Nous Rejoindre</a>
+					</div>
+				  </div>
+				</div>
+			  </div>
 			<script>
 				async function interact(article_id, user_id,interactionType,element) {
 					
@@ -117,7 +145,7 @@
 						}
 						element.children[0].innerText=number;
 						}else{
-							console.log('veuillez vous connectez')
+							$("#myModal").modal()
 						}
 
 				}
@@ -127,8 +155,4 @@
 
 
 	</div>
-{% endblock %}
-{% block stylesheets %}
-	<link rel="stylesheet" href="/css/bootstrap.min.css">
-	<link href="{{ asset('css/article/home.css') }}" rel="stylesheet"/>
 {% endblock %}
