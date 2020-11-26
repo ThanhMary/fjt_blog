@@ -8,6 +8,8 @@
 		</title>
 		{% block stylesheets %}
 			<link rel="stylesheet" href="/css/bootstrap.min.css">
+			<link rel="icon" type="image/x-icon" href="/css/fjt.ico" />
+			<script src="https://kit.fontawesome.com/03867dfece.js" crossorigin="anonymous"></script>
 			{{ encore_entry_link_tags('tailwind') }}
 		{% endblock %}
 		<meta charset="UTF-8">
@@ -36,12 +38,15 @@
 			{% endfor %}
 		</div>
 		<div class="container-fluid"> {% block body %}{% endblock %}
-			</div>
-			{% block javascripts %}
-				<script src="/js/jquery-3.2.1.slim.min.js"></script>
-				<script src="/js/popper.min.js"></script>
-				<script src="/js/bootstrap.min.js"></script>
-			{% endblock %}
+		</div>
+		{% block javascripts %}
+			<script src="/js/jquery-3.2.1.slim.min.js"></script>
+			<script src="/js/popper.min.js"></script>
+			<script src="/js/bootstrap.min.js"></script>
+		{% endblock %}
+
+
+		{% include "include/footer.html.twig" %}
 
 		</body>
 	</html>
