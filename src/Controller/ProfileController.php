@@ -5,17 +5,19 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Interaction;
 use http\Env\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
 
 class ProfileController extends AbstractController
 {
+
     private $security;
 
-    public function __construct(Security $security)
+    public function __construct(\Symfony\Component\Security\Core\Security $security)
     {
         $this->security = $security;
     }
@@ -60,6 +62,7 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/profile/liked_articles", name="profile.liked_articles")
      */
     public function liked_articles_page()
@@ -70,6 +73,7 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/profile/shared_articles", name="profile.shared_articles")
      */
     public function shared_articles_page()
@@ -80,6 +84,7 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/profile/comment_articles", name="profile.comment_articles")
      */
     public function comment_articles_page()

@@ -2,86 +2,60 @@
 
 {% block body %}
     <div class="container">
-        <section class="articles">
-            <h1>Article Aimés</h1>
+        <div class="flex">
+            <div>
+                <ul>
+                    <li><a href="{{ path('profile') }}">Profil</a></li>
+                    <li><a href="{{ path('profile.liked_articles') }}">Articles aimés</a></li>
+                    <li><a href="{{ path('profile.shared_articles') }}">Articles partagés</a></li>
+                    <li><a href="{{ path('profile.comment_articles') }}">Articles commentés</a></li>
+                </ul>
+            </div>
+            <div>
+                <section class="articles">
+                    <h1>Article Aimés</h1>
 
-            {% for liked_article in last_liked_articles %}
-            <hr>
-                <a href="{{path('article_show', {'id': liked_article.article.id})}}">
+                    {% for liked_article in last_liked_articles %}
+                        <hr>
+                        <a href="{{path('article_show', {'id': liked_article.article.id})}}">
 
-                    <article class="article">
-                        <h3>{{liked_article.article.title}}</h3>
-                        <h5>{{liked_article.article.subtitle}}</h5>
-                        <div class="metadate">Ecrit le
-                            {{liked_article.article.creationDate | date('d/m/Y')}}
-                            à
-                            {{liked_article.article.creationDate | date('H:i')}}
-                            dans la categorie:
-                            {{liked_article.article.category.name}}</div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img src='{{liked_article.article.picturePath}}' , style="width:200px;height:130px;">
-                            </div>
-                            <div class="col-md-8">
-                                {{liked_article.article.content | raw}}
-                                {# <a href="{{path('', {'id': article.id})}}" class="btn btn-outline-info">... Lire la suite</a> #}
-                            </div>
-                        </div>
-                    </article>
-                </a>
-                {% endfor %}
-        </section>
-        <style>
-            .article {
-                padding: 10px;
-            }
-            a {
-                color: inherit;
-                cursor: pointer;
-                text-decoration: none;
-            }
-            .article:hover {
-                /*color: #bdaa77;*/
-                background-color: #D5F5E3;
-            }
-        </style>
+                            <article class="article">
+                                <h3>{{liked_article.article.title}}</h3>
+                                <h5>{{liked_article.article.subtitle}}</h5>
+                                <div class="metadate">Ecrit le
+                                    {{liked_article.article.creationDate | date('d/m/Y')}}
+                                    à
+                                    {{liked_article.article.creationDate | date('H:i')}}
+                                    dans la categorie:
+                                    {{liked_article.article.category.name}}</div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img src='{{liked_article.article.picturePath}}' , style="width:200px;height:130px;">
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{liked_article.article.content | raw}}
+                                        {# <a href="{{path('', {'id': article.id})}}" class="btn btn-outline-info">... Lire la suite</a> #}
+                                    </div>
+                                </div>
+                            </article>
+                        </a>
+                    {% endfor %}
+                </section>
+                <style>
+                    .article {
+                        padding: 10px;
+                    }
+                    a {
+                        color: inherit;
+                        cursor: pointer;
+                        text-decoration: none;
+                    }
+                    .article:hover {
+                        /*color: #bdaa77;*/
+                        background-color: #D5F5E3;
+                    }
+                </style>
+            </div>
+        </div>
     </div>
-
-    <h1>Article Aimés</h1>
-
-    <table class="table">
-        <thead>
-        <tr>
-
-            <th>Creation_date</th>
-            <th>Title</th>
-            <th>Subtitle</th>
-            <th>Content</th>
-            <th>State</th>
-            <th>Picture_path</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for liked_article in last_liked_articles %}
-
-            <td>{{ liked_article.article.getCreationDate ? liked_article.article.getCreationDate|date('Y-m-d H:i:s') : '' }}</td>
-            <td>{{ liked_article.article.title }}</td>
-            <td>{{ liked_article.article.subtitle }}</td>
-            <td>{{ liked_article.article.content }}</td>
-            <td>{{ liked_article.article.state ? 'Yes' : 'No' }}</td>
-            <td>{{ liked_article.article.picturePath }}</td>
-            <td>
-                <a href="{{ path('article_show', {'id': liked_article.article.id}) }}">Show</a>
-                <a href="{{ path('article_edit', {'id': liked_article.article.id}) }}">Edit</a>
-                <a href="{{ path('article_delete', {'id': liked_article.article.id}) }}">Delete</a>
-            </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 {% endblock %}
