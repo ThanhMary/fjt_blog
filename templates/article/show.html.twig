@@ -1,46 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Article{% endblock %}
+{% block title %}Article
+{% endblock %}
 
 {% block body %}
-    <h1>Article</h1>
+	<h1>Article</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
-            </tr>
-            <tr>
-                <th>Date de création</th>
-                <td>{{ article.creationDate ? article.creationDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ article.title }}</td>
-            </tr>
-            <tr>
-                <th>Sous-titre</th>
-                <td>{{ article.subtitle }}</td>
-            </tr>
-            <tr>
-                <th>Contenu</th>
-                <td>{{ article.content }}</td>
-            </tr>
-            <tr>
-                <th>Etat</th>
-                <td>{{ article.state ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Etat de l'image</th>
-                <td>{{ article.picturePath }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('article_index') }}">revenir à la liste</a>
-
-    <a href="{{ path('article_edit', {'id': article.id}) }}">éditer</a>
-
-    {{ include('article/_delete_form.html.twig') }}
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ article.id }}</td>
+			</tr>
+			<tr>
+				<th>Date de création</th>
+				<td>{{ article.creationDate ? article.creationDate|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Titre</th>
+				<td>{{ article.title }}</td>
+			</tr>
+			<tr>
+				<th>Sous-titre</th>
+				<td>{{ article.subtitle }}</td>
+			</tr>
+			<tr>
+				<th>Contenu</th>
+				<td>{{ article.content }}</td>
+			</tr>
+			<tr>
+				<th>Etat</th>
+				<td>{{ article.state ? 'Yes' : 'No' }}</td>
+			</tr>
+			<tr>
+				<th>Etat de l'image</th>
+				<td>{{ article.picturePath }}</td>
+			</tr>
+		</tbody>
+	</table>
+	{% if app.user %}
+		FORM COMMENTAIRE ( manque de temp)
+	{% else %}
+		<a href="{{path('app_login')}}">
+			Il faut etre connectez pour deposer un commentaire</a>
+	{% endif %}
+	{% for comment in article.comments %}
+		<div>
+			<div>
+				{{comment.date |date('Y-m-d H:i:s') }}
+			</div>
+			<div>
+				<span>{{comment.user.firstname}}</span>
+				<span>{{comment.user.lastname}}</span>
+			</div>
+			<div>
+				{{comment.content}}
+			</div>
+		</div>
+	{% endfor %}
+	<a href="{{ path('article_index') }}">revenir à la liste</a>
+	{{ include('article/_delete_form.html.twig') }}
 {% endblock %}
