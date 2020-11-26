@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contact index
+{% block title %}Index des contacts
 {% endblock %}
 
 {% block body %}
@@ -9,10 +9,10 @@
 		<table class="table table-hover table-responsive-lg table-bordered">
 			<thead>
 				<tr>
-					<th>FirstName</th>
-					<th>LastName</th>
+					<th>Prénom</th>
+					<th>Nom</th>
 					<th>Email</th>
-					<th>Telephone</th>
+					<th>Téléphone</th>
 					<th>Message</th>
 					<th>actions</th>
 				</tr>
@@ -27,12 +27,12 @@
 						<td>{{ contact.telephone }}</td>
 						<td>{{ contact.message }}</td>
 						<td>
-							<a href="{{ path('contact_show', {'id': contact.id}) }}">Delete</a>
+							<a href="{{ path('contact_show', {'id': contact.id}) }}">Supprimer</a>
 						</td>
 					</tr>
 				{% else %}
 					<tr>
-						<td colspan="7">no records found</td>
+						<td colspan="7">aucune entrée trouvée</td>
 					</tr>
 				{% endfor %}
 			</tbody>

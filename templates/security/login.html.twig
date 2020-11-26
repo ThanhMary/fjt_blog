@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Se connecter !{% endblock %}
 
 {% block body %}
 <form method="post">
@@ -10,7 +10,7 @@
 
     {% if app.user %}
         <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            Vous êtes connectés en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
         </div>
     {% endif %}
 <div class="container">
@@ -24,18 +24,18 @@
                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
                 <label for="inputPassword">Password</label>
                 <input type="password" name="password" id="inputPassword" class="form-control" required>
-    
+
                <input type="hidden" name="_csrf_token"
                    value="{{ csrf_token('authenticate') }}">
                 <div class="checkbox mb-3">
                     <label>
-                        <input type="checkbox" name="_remember_me"> Remember me
+                        <input type="checkbox" name="_remember_me"> Se souvenir de moi
                     </label>
                 </div>
                 <button class="btn btn-lg btn-outline-info float-right" type="submit"> Sign in  </button>
             </form>
 
-  
+
         </div>
         <div class="col-md-2" style='border: 5px; padding: 20px; background-color: #3B5145;' >
         <img src="" alt="">

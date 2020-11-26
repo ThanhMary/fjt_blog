@@ -1,7 +1,7 @@
 {% block body %}
     <article>
         <h2>{{article.title}}</h2>
-        <div class="metadate">Ecrit le {{article.creationDate | date('d/m/Y')}} à {{article.creationDate | date('H:i')}} dans la category {{article.category.name}}</div>
+        <div class="metadate">Ecrit le {{article.creationDate | date('d/m/Y')}} à {{article.creationDate | date('H:i')}} dans la categorie {{article.category.name}}</div>
         <div class="content">
             <img src="{{article.picturePath}}" alt="">
             <br>
@@ -16,7 +16,7 @@
                     <div class="col-3">
                     {{comment.user}} (<small>{{comment.Date | date('d/m/Y à H:i')}}</small>)
                     </div>
-                   
+
                     <div class="col">
                     {{comment.content | raw}}
                     </div>
@@ -29,7 +29,7 @@
             {{form_row(commentForm.user, {'attr': {'placehold':'Votre nom'}})}}
             {{form_row(commentForm.content, {'attr': {'placehold':'Votre commentaire'}})}}
              <button type="submit" class="btn btn-success"> Commenter</button>
-            {{form_end(commentForm)}} 
+            {{form_end(commentForm)}}
 {% else %}
 <h4> Attention: Vous ne pouvez pas commenter si vous ne vous authentifiez pas sur le site! </h4>
 

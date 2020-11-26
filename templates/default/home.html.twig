@@ -9,15 +9,15 @@
 			<div class="col-3" style='border: 5px; padding: 20px; background-color: #3B5145;'>
 				<h3 style="color: white;">Recherche</h3>
 
-				{# {{ form_start(form, {attr: {class: 'filter js-filter-form'}}) }} 
-																																																								    <div class="spinner-border js-loading" role="status" aria-hidden="true" style="display: none">
-																																																								    <span class="sr-only">Loading...</span>  </div>
-																																																								
-																																																								            {{ form_row(form.q) }}
-																																																								           <h4>Catégories</h4>
-																																																								            {{ form_row(form.categories) }}
-																																																								            <button type="submit" class="btn btn-primary w-100">Filtrer</button>
-																																																								            {{ form_end(form) }} #}
+				{# {{ form_start(form, {attr: {class: 'filter js-filter-form'}}) }}
+		    <div class="spinner-border js-loading" role="status" aria-hidden="true" style="display: none">
+		    <span class="sr-only">Loading...</span>  </div>
+
+		            {{ form_row(form.q) }}
+		           <h4>Catégories</h4>
+		            {{ form_row(form.categories) }}
+		            <button type="submit" class="btn btn-primary w-100">Filtrer</button>
+		            {{ form_end(form) }} #}
 			</div>
 
 			<div class="col-9" style='border: 5px; padding: 20px; background-color: #D5F5E3;'>
@@ -31,14 +31,14 @@
 							<div class="metadate">Ecrit le
 								{{article.creationDate | date('d/m/Y')}},
 								{% if article.autor != null  %}
-									by
+									par
 									{{article.autor.firstname}}
 									{{article.autor.lastname}}
 								{% else %}
-									by unknown user
+									par utilisateur inconnu
 								{% endif %}
 								à
-								{{article.creationDate | date('H:i')}}, 
+								{{article.creationDate | date('H:i')}},
 																																																																																																																                Categorie:
 								{{article.category.name}}
 							</div>
@@ -53,7 +53,7 @@
 							</div>
 							<div class="socials">
 
-								
+
 								<div onclick="interact({{article.id}} , {{ app.user != null? app.user.id : 'null' }} , 0 , this )" class="social" ">
 									<span  class="social_tag">
 
@@ -82,7 +82,7 @@
 				</section>
 
 				<hr>
-				{# <div class="pagination float-center"> 
+				{# <div class="pagination float-center">
 				 {{knp_pagination_render(articles)}}
 				</div> #}
 			</div>
@@ -115,10 +115,10 @@
 			  </div>
 			<script>
 				async function interact(article_id, user_id,interactionType,element) {
-					
+
 					console.log(element);
 					number=Number.parseInt(element.children[0].innerText) ;
-					
+
 					var url = Routing.generate('article_interact',
 						{
 							'id': article_id
@@ -130,13 +130,13 @@
 					};
 
 					if (user_id != null) {
-				
+
 						let response = await fetch(url,
 						{
 							method: "POST",
 							body: JSON.stringify(content)
 						});
-					
+
 						liked = await response.json();
 						if(liked['action']=='add'&&liked['state']==true){
 							number+=1;

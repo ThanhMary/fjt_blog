@@ -6,7 +6,7 @@
         <section class="articles">
 
             <h1 class="h1">
-                <span v-if="page === 'liked'">Article Aimés</span>
+                <span v-if="page === 'liked'">Article Likés</span>
                 <span v-else-if="page === 'shared'">Article Partagés</span>
                 <span v-else-if="page === 'comment'">Article Commentés</span>
                 <span v-else >Articles</span>
@@ -45,7 +45,7 @@
                             </div>
                             <div>
 
-                                <div><a :href="'/article/' + article.id" class="border-2 border-black p-2 m-4 bg-blue-500">... Détail</a></div>
+                                <div><a :href="'/article/' + article.id" class="border-2 border-black p-2 m-4 bg-blue-500">... Détails</a></div>
                             </div>
                         </div>
                     </article>

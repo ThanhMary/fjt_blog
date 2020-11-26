@@ -1,23 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Article index
+{% block title %}Index des articles
 {% endblock %}
 
 {% block body %}
 	<div style='border: 5px; padding: 20px; background-color: #D5F5E3;'>
-		<h3>All Articles</h3>
+		<h3>Tous les articles</h3>
 
 		<table class="table table-bordered table-hover table-responsive-lg">
 			<thead>
 				<tr>
 
-					<th>Creation_date</th>
-					<th>Title</th>
-					<th>Subtitle</th>
-					<th>Author</th>
-					<th>Content</th>
-					<th>State</th>
-					<th>Picture_path</th>
+					<th>Date de création</th>
+					<th>Titre</th>
+					<th>Sous-titres</th>
+					<th>Auteur</th>
+					<th>Contenu</th>
+					<th>Etat</th>
+					<th>Lien vers image</th>
 					<th>actions</th>
 				</tr>
 			</thead>
@@ -32,7 +32,7 @@
 							<td>{{ article.autor.firstname }}
 								{{ article.autor.lastname }}</td>
 						{% else %}
-							<td>unregistered user</td>
+							<td>Utilisateur non-enregistré</td>
 						{% endif %}
 
 
@@ -40,14 +40,14 @@
 						<td>{{ article.state ? 'Yes' : 'No' }}</td>
 						<td>{{ article.picturePath }}</td>
 						<td>
-							<a href="{{ path('article_show', {'id': article.id}) }}">Show</a>
-							<a href="{{ path('article_edit', {'id': article.id}) }}">Edit</a>
-							<a href="{{ path('article_delete', {'id': article.id}) }}">Delete</a>
+							<a href="{{ path('article_show', {'id': article.id}) }}">Afficher</a>
+							<a href="{{ path('article_edit', {'id': article.id}) }}">Editer</a>
+							<a href="{{ path('article_delete', {'id': article.id}) }}">Supprimer</a>
 						</td>
 					</tr>
 				{% else %}
 					<tr>
-						<td colspan="8">no records found</td>
+						<td colspan="8">Nous n'avons rien trouvé</td>
 					</tr>
 				{% endfor %}
 			</tbody>

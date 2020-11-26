@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Article
+{% block title %}Nouvel article
 {% endblock %}
 
 {% block body %}
@@ -16,7 +16,7 @@
 						{{ form_row(form.title, {'attr': {'placeholder': "Titre de l'article"}}) }}
 					</div>
 					<div class="col-sm-6">
-						{{ form_row(form.subtitle, {'attr': {'placeholder': "Soustitre de l'article"}}) }}
+						{{ form_row(form.subtitle, {'attr': {'placeholder': "Sous-titre de l'article"}}) }}
 					</div>
 				</div>
 				<div class="row">
@@ -38,12 +38,12 @@
 
 				<button class="btn btn-outline-info float-right">
 					{% if editMode %}
-						EDIT
+						EDITER
 					{% else %}
-						SAVE
+						SAUVEGARDER
 					{% endif %}
 				</button>
-				<a class="btn btn-outline-primary " href="{{ path('article_index') }}">Back to list</a>
+				<a class="btn btn-outline-primary " href="{{ path('article_index') }}">Revenir à la liste</a>
 
 
 				{# {{form_widget(form)}}
