@@ -9,10 +9,11 @@ use App\Entity\Article;
 use App\Entity\Comment;
 use App\Form\ArticleType;
 use App\Entity\Interaction;
+use App\Service\FileUploadService;
+use App\Service\InteractionService;
 use App\Repository\ArticleRepository;
 use Symfony\Component\Asset\Packages;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Service\InteractionService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -91,7 +92,7 @@ class ArticleController extends AbstractController
      * @Route("/new", name="article_new", methods={"GET","POST"})
      *  @Route("/{id}/edit", name="article_edit")
      */
-    public function new(Article $article = null, Request $request, EntityManagerInterface $manager): Response
+    public function new(Article $article = null, Request $request, FileUploadService $fus): Response
     {
         if (!$article) {
             $article = new Article();
@@ -107,15 +108,7 @@ class ArticleController extends AbstractController
             $picture = $form->get('picturePath')->getData();
             $article->setCreationDate(new DateTime());
             if ($picture) {
-                $newFilename = uniqid() . '.' . $picture->guessExtension();
-                try {
-                    $picture->move(
-                        $this->getParameter('pictures'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    throw new Exception('Error on picture upload');
-                }
+                $newFilename = $fus->store_picture($picture);
                 $article->setPicturePath($request->getSchemeAndHttpHost() . '/uploads/pictures/' . $newFilename);
                 $article->setAutor($this->getUser());
             }

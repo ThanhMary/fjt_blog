@@ -29,9 +29,20 @@ class DefaultController extends AbstractController
         $form = $this->createForm(SearchForm::class, $data);
         $form->handleRequest($request);
         $articles = $articleRepository->findSearch($data);
+
+        $user = $this->getUser();
+        if ($user) {
+            $articles = $user->getArticles()->toArray();
+            foreach ($articles as $article) {
+                $tabArticles[] = $article->getId();
+            }
+        }
+
+
         return $this->render('default/home.html.twig', [
             'articles' => $articles,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'user_article' => isset($tabArticles) && $tabArticles ? $tabArticles : null,
         ]);
     }
 
@@ -45,46 +56,55 @@ class DefaultController extends AbstractController
         ]);
     }
 
-     /**
+    /**
      * @Route("/", name="default_home", methods={"GET"})
      */
 
-    public function home(PaginatorInterface $paginator, Request $request): Response
+    public function home(PaginatorInterface $paginator, Request $request, ArticleRepository $articleRepository): Response
     {
-        
-            $donnees = $this->getDoctrine()->getRepository(Article::class)->findBy([],['creationDate' => 'desc']);
-            $articles = $paginator->paginate(
-            $donnees, 
-            $request->query->getInt('page', 1), 
-              5 ); 
-             return $this->render('default/home.html.twig', [
-             'articles' => $articles,
+        $donnees = $this->getDoctrine()->getRepository(Article::class)->findBy([], ['creationDate' => 'desc']);
+        $articles = $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page', 1),
+            5
+        );
+
+        $user = $this->getUser();
+        if ($user) {
+            $articles = $user->getArticles()->toArray();
+            foreach ($articles as $article) {
+                $tabArticles[] = $article->getId();
+            }
+        }
+
+        return $this->render('default/home.html.twig', [
+            'articles' => $articles,
+            'user_article' => isset($tabArticles) && $tabArticles ? $tabArticles : null,
         ]);
     }
 
-     /**
+    /**
      * @Route("/detail/{id}", name="default_show", methods={"GET"})
      */
     public function show(Article $article, Request $request, EntityManagerInterface $manager): Response
     {
-       
+
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
         $comment->setDate(new DateTime());
-       
-        if($form->isSubmitted()&& $form->isValid()){
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $comment->setDate(new \DateTime())
-                    ->setArticle($article);
+                ->setArticle($article);
             $manager->persist($comment);
             $manager->flush();
 
-            return $this->redirectToRoute('default_show', ['id'=>$article->getId()]);
+            return $this->redirectToRoute('default_show', ['id' => $article->getId()]);
         }
         return $this->render('default/show.html.twig', [
-            'article'=>$article,
-            'Form'=>$form->createView()
+            'article' => $article,
+            'Form' => $form->createView()
         ]);
-        
     }
 }
