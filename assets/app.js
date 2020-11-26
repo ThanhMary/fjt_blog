@@ -19,36 +19,38 @@ var app = new Vue({
     delimiters: ['@{', '}'],
     data: function(){
         return {
+            page: page,
             routes: routes,
             filters: {
                 author: null,
                 date: null,
                 title: null,
             },
-            liked_articles: [],
+            articles: [],
+            search: null
         }
     },
     beforeCreate: async function () {
-        await fetch(routes.profile_liked_articles)
+
+        await fetch(routes.profile_get_articles)
             .then(res => res.json())
-            .then(res => this.liked_articles = res)
+            .then(res => this.articles = res)
             .catch(error => alert("Erreur : " + error));
 
         /* Make dates */
-        this.liked_articles = this.liked_articles.map(article => {
+        this.articles = this.articles.map(article => {
                 let date_time = article.creation_date.date;
-                let date = moment(date_time).format('DD MM YYYY');
+                let date = moment(date_time).format('DD/MM/YYYY');
                 let time = moment(date_time).format('hh:mm:ss');
                 article.creation_date = {date, time};
                 return article;
             }
         );
 
-        cl(this.liked_articles)
     },
     computed: {
-        filter_liked_articles: function () {
-            let articles = this.liked_articles;
+        filter_articles: function () {
+            let articles = this.articles;
 
             /** Filter functions */
             const sort_alphabetical = (a, b) => {
@@ -58,47 +60,38 @@ var app = new Vue({
             };
 
             const convert_date_to_number = date =>
-                parseInt(moment(date.creation_date.date, 'DD MM YYYY').format('YYYYMMDD'))
-
+                parseInt(moment(date.creation_date.date, 'DD/MM/YYYY').format('YYYYMMDD'))
 
             articles = articles.map((article, index) => {
                 article.author = index % 2 ? 'aa': 'bb';
                 return article;
             });
 
-            if(this.filters['author'] !== null){
+            /* Apply search */
+            articles = articles.filter(article => this.search !== null ? article.category_name.toLowerCase().indexOf(this.search.toLowerCase()) !== -1 : true)
+
+            /* Apply filters */
+            if(this.filters['author'] !== null)
                 articles.sort((article_a, article_b) =>
                     this.filters['author'] === 'ASC' ?
                         sort_alphabetical(article_a.author ,article_b.author) :
                         sort_alphabetical(article_b.author ,article_a.author )
                 );
-            }
 
-            if(this.filters['date'] !== null){
+            if(this.filters['date'] !== null)
                 articles.sort((article_a, article_b) =>
                     this.filters['date'] === 'ASC' ?
                         convert_date_to_number(article_a) - convert_date_to_number(article_b) :
                         convert_date_to_number(article_b) - convert_date_to_number(article_a)
                 );
-            }
 
-            if(this.filters['title'] !== null){
+            if(this.filters['title'] !== null)
                 articles.sort((article_a, article_b) =>
                     this.filters['title'] === 'ASC' ?
                         sort_alphabetical(article_a.title ,article_b.title) :
                         sort_alphabetical(article_b.title ,article_a.title)
 
                 );
-            }
-
-            /*            for(let filter in this.filters){
-                            if(this.filters[filter] !== null){
-                                articles.sort((article_a, article_b) =>
-                                    this.filters[filter] === 'ASC' ? sort_alphabetical(article_a.author ,article_b.author) : sort_alphabetical(article_b.author ,article_a.author))
-                            }
-
-                        }*/
-
 
             return articles;
         }

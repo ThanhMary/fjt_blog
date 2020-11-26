@@ -1,5 +1,7 @@
 # fjt_blog
-Projet Full-stack Ynov
+
+# [Link Report](https://docs.google.com/document/d/1cCGVpjxGDtKQDu-Muiq8BVfK6UllhJbDCEEcH2SbcU4/edit?usp=sharing)
+Class diagramm and other additional files are in [/public/report_files/](https://github.com/ThanhMary/fjt_blog/tree/main/public/report_files)
 
 ## Connections
 
@@ -12,10 +14,10 @@ Projet Full-stack Ynov
 
 | Without account                                 |      User     |        Admin  |
 | -------------                                 | ------------- |------------- |
-| [example](http://name_project)  |  | |
-| | | |
-| |   |  |
-| |  | 
+| [/](http://blog.com) | [/profile](http://blog.com/profile) |[/article/new](http://blog.com/article/new) |
+| [/propos](http://blog.com/propos) |[/profile/liked_articles](http://blog.com/profile/liked_articles) |[/article/](http://blog.com/article) |
+| [/contact/new](http://blog.com/contact/new) |  | [/contact/](http://blog.com/contact) |
+| [/login](http://blog.com/login) |  | 
 
 ## Steps to reproduce :
 

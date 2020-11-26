@@ -4,49 +4,62 @@
     {# Vue js #}
     <div id="app">
         <section class="articles">
-            <div class="h1">Filtres</div>
-            <div class="flex space-x-4 ">
-                <div class="w-32 bg-blue-200 px-4" v-for="(filter, index) in filters" @click="update_filter(index)">
-                    <div>@{index }</div>
-                    <div class="bg-blue-300 cursor-pointer p-1 mb-2 hover:bg-blue-400"> @{filter ? filter : 'désactivé'}</div>
+
+            <h1 class="h1">
+                <span v-if="page === 'liked'">Article Aimés</span>
+                <span v-else-if="page === 'shared'">Article Partagés</span>
+                <span v-else-if="page === 'comment'">Article Commentés</span>
+                <span v-else >Articles</span>
+            </h1>
+
+            <div class="lg:flex lg:space-between">
+                <div class="h2 lg:mr-2">Recherche sur les catégories</div>
+                <input v-model="search" class="search border-2 border-black lg:h-2/3 mr-2 align-bottom" type="text">
+                <div class="h2 lg:mr-2">Filtres</div>
+                <div class="flex space-x-4 mb-4">
+                    <div class="w-32 bg-blue-200 px-4" v-for="(filter, index) in filters" @click="update_filter(index)">
+                        <div>@{index }</div>
+                        <div class="bg-blue-300 cursor-pointer p-1 mb-2 hover:bg-blue-400"> @{filter ? filter : 'désactivé'}</div>
+                    </div>
                 </div>
             </div>
+            <div v-if="filter_articles.length !== 0" >
+                <div class="p-2 mb-2 border-black border-4 border-b-8" v-for="article in filter_articles">
+                    <hr>
 
-            <h1 class="h1">Article Aimés</h1>
+                    <article class="article">
+                        <h3>@{article.title}</h3>
+                        <h5>@{article.subtitle}</h5>
+                        <div class="metadate">Ecrit le
+                            TODO: date good format
+                            @{article.creation_date.date }
+                            à
+                            @{article.creation_date.time }
+                            dans la categorie:
+                            @{article.category_name}</div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img :src='article.picture_path' style="width:200px;height:130px;">
+                            </div>
+                            <div class="col-md-8">
+                                @{article.content}
+                                {#TODO: how to make path #}
 
-            <div class="p-2 mb-2 border-black border-4 border-b-8" v-for="liked_article in filter_liked_articles">
-                <hr>
+                                {#<a href="{{path('article_show', {'id':  )}}" class="btn btn-outline-info">... Détail</a>#}
 
-                <article class="article">
-                    <h3>@{liked_article.title}</h3>
-                    <h5>@{liked_article.subtitle}</h5>
-                    <div class="metadate">Ecrit le
-                        {# TODO: date good format #}
-                        @{liked_article.creation_date.date }
-                        à
-                        @{liked_article.creation_date.time }
-                        dans la categorie:
-                        @{liked_article.category_name}</div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <img :src='liked_article.picture_path' style="width:200px;height:130px;">
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            @{liked_article.content}
-                            {# TODO: how to make path #}
-                            {#
-                                                            <a href="{{path('article_show', {'id':  )}}" class="btn btn-outline-info">... Détail</a>
-                            #}
-                        </div>
-                    </div>
-                </article>
+                    </article>
+                </div>
             </div>
+            <div class="text-red-800" v-else>Pas d'articles trouvés pour cette recherche de catégories </div>
         </section>
     </div>
     <script>
         window.routes = {
-            profile_liked_articles : "{{ path('profile.get_liked_articles') }}"
-        }
+            profile_get_articles :  '{{ path('profile.get_'~page~'_articles') }}'
+        };
+        window.page = "{{ page }}"
     </script>
     {# VUE JS #}
     {{ encore_entry_script_tags('app') }}

@@ -8,6 +8,8 @@
 		</title>
 		{% block stylesheets %}
 			<link rel="stylesheet" href="/css/bootstrap.min.css">
+			<link rel="icon" type="image/x-icon" href="/css/fjt.ico" />
+			<script src="https://kit.fontawesome.com/03867dfece.js" crossorigin="anonymous"></script>
 			{{ encore_entry_link_tags('tailwind') }}
 		{% endblock %}
 		<meta charset="UTF-8">
@@ -36,6 +38,7 @@
 			{% endfor %}
 		</div>
 		<div class="container-fluid"> {% block body %}{% endblock %}
+<<<<<<< HEAD
 			</div>
 			{% block javascripts %}
 				<script src="/js/jquery-3.2.1.slim.min.js"></script>
@@ -44,6 +47,17 @@
 				<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
 				<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 			{% endblock %}
+=======
+		</div>
+		{% block javascripts %}
+			<script src="/js/jquery-3.2.1.slim.min.js"></script>
+			<script src="/js/popper.min.js"></script>
+			<script src="/js/bootstrap.min.js"></script>
+		{% endblock %}
+
+
+		{% include "include/footer.html.twig" %}
+>>>>>>> 89d061270c55a8e3037fbea8954e42b83bc2f0aa
 
 		</body>
 	</html>

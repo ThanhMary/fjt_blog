@@ -8,22 +8,21 @@
 
 	<div class="collapse navbar-collapse" id="navbarColor02">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active">
-				<a class="nav-link" href="{{path('default_home')}}">&nbsp &nbsp &nbsp  HOME</a>
-				<span class="sr-only">(current)</span>
-			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="{{path('propos')}}">
-					ABOUT US</a>
+					À PROPOS</a>
 				<span class="sr-only">(current)</span>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="{{path('contact_new')}}">CONTACT</a>
 			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{path('profile')}}">PROFIL</a>
+			</li>
 			{# Partie admin #}
 			{% if app.user and is_granted('ROLE_ADMIN')%}
 				<li class="nav-item">
-					<a class="nav-link" href="{{path('article_new')}}">CREER UN ARTICLE</a>
+					<a class="nav-link" href="{{path('article_new')}}">CRÉER UN ARTICLE</a>
 				</li>
 				<li class="nav-item ">
 					<a class="nav-link" href="{{path('article_index')}}">
@@ -42,13 +41,13 @@
 	{% if app.user %}
 		<ul class="navbar-nav push-right mx-5">
 			<li class="nav-item">
-				<a class="nav-link" href="{{path('app_logout')}}">LOG OUT</a>
+				<a class="nav-link" href="{{path('app_logout')}}">SE DÉCONNECTER</a>
 			</li>
 		</ul>
 	{% else %}
 		<ul class="navbar-nav push-right mx-5">
 			<li class="nav-item">
-				<a class="nav-link" href="{{path('app_login')}}">LOG IN</a>
+				<a class="nav-link" href="{{path('app_login')}}">SE CONNECTER</a>
 			</li>
 		</ul>
 
