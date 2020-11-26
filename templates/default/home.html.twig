@@ -51,8 +51,8 @@
 							<div class="socials">
 
 								
-								<div onclick="like({{article.id}} , {{ app.user != null? app.user.id : 'null' }} )" class="social" ">
-									<span class="social_tag">
+								<div onclick="interact({{article.id}} , {{ app.user != null? app.user.id : 'null' }} , 0 , this )" class="social" ">
+									<span  class="social_tag">
 
 										{{ article.interactions |filter(v => v.interactionType == 0 )|length }}
 										{# an error with   constant('App\\Entity\\Article::LIKE')) |length  }}     #}
@@ -62,9 +62,10 @@
 										<use xlink:href="#like"></use>
 									</svg>
 								</div>
-								<div class="social">
+								<div onclick="interact({{article.id}} , {{ app.user != null? app.user.id : 'null' }} , 1 ,this )" class="social">
 									<span class="social_tag">
-										Partager
+										{{ article.interactions |filter(v => v.interactionType == 1 )|length }}
+										{# an error with   constant('App\\Entity\\Article::LIKE')) |length  }}     #}
 									</span>
 									<svg class="social_icon">
 										<use xlink:href="#comment"></use>
@@ -85,26 +86,39 @@
 
 			</div>
 			<script>
-				async function like(article_id, user_id) {
-					var url = Routing.generate('article_like_add',
+				async function interact(article_id, user_id,interactionType,element) {
+					
+					console.log(element);
+					number=Number.parseInt(element.children[0].innerText) ;
+					
+					var url = Routing.generate('article_interact',
 						{
 							'id': article_id
 						});
-					console.log(url)
-					let content = {
+
+						let content = {
 						user: user_id,
-					}
-					//if (user_id != null) {
-					let response = await fetch(url,
+						interact_type: interactionType,
+					};
+
+					if (user_id != null) {
+				
+						let response = await fetch(url,
 						{
 							method: "POST",
 							body: JSON.stringify(content)
 						});
-					liked = await response.json();
-					console.log(liked);
-					//	}else{
-
-					//	}
+					
+						liked = await response.json();
+						if(liked['action']=='add'&&liked['state']==true){
+							number+=1;
+						}else if(liked['action']=='remove'&&liked['state']==true){
+							number-=1;
+						}
+						element.children[0].innerText=number;
+						}else{
+							console.log('veuillez vous connectez')
+						}
 
 				}
 			</script>

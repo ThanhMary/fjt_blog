@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Interaction;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Types\BooleanType;
+use phpDocumentor\Reflection\Types\Boolean;
 
 /**
  * @method Interaction|null find($id, $lockMode = null, $lockVersion = null)

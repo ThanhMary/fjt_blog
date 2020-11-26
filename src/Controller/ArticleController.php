@@ -6,17 +6,17 @@ use DateTime;
 use Exception;
 use App\Entity\User;
 use App\Entity\Article;
-use App\Entity\Interaction;
 use App\Entity\Comment;
 use App\Form\ArticleType;
+use App\Entity\Interaction;
 use App\Repository\ArticleRepository;
 use Symfony\Component\Asset\Packages;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\InteractionService;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
@@ -134,30 +134,26 @@ class ArticleController extends AbstractController
             'editMode' => $article->getId() !== null
         ]);
     }
+
+
     /**
-     * @Route("/{id}/like", name="article_like_add",options={"expose"=true}, methods={"POST"})
+     * @Route("/{id}/like", name="article_interact",options={"expose"=true}, methods={"POST"})
      */
-    public function like(Request $request, Article $article): Response
+    public function interact(Request $request, Article $article, InteractionService $is): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
-        return new JsonResponse('coucou');
         //permite accesss post body
         $parameters = json_decode($request->getContent(), true);
+        $interactionRepo = $this->getDoctrine()->getRepository(Interaction::class);
+        $interact = $parameters['interact_type'];
+        $user = $this->getUser();
 
-        if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
-            $like = new Interaction();
-            $like->setUser($this->getUser())
-                ->setArticle($article)
-                ->setInteractionType(Interaction::LIKE);
-
-            $entityManager->flush();
+        if (!$interactionRepo->findOneBy(['article' => $article->getId(), 'user' => $this->getUser()->getId(), 'interaction_type' => $interact])) {
+            return $is->interact_add($article, $user, $interact);
+        } else {
+            return $is->interact_remove($article, $user, $interact);
         }
-
-
-
-        return $this->redirectToRoute('article_index');
     }
-
 
     /**
      * @Route("/{id}", name="article_show", methods={"GET"})
