@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome!
+			{% block title %}Bienvenue !
 			{% endblock %}
 		</title>
 		{% block stylesheets %}
@@ -46,6 +46,7 @@
 				<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
 				<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 			{% endblock %}
+		{% include "include/footer.html.twig" %}
 
 		</body>
 	</html>
