@@ -20,8 +20,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
-
-
 /**
  * @Route("/article")
  */
@@ -65,7 +63,6 @@ class ArticleController extends AbstractController
      */
     public function detail(Article $article, Request $request, EntityManagerInterface $manager): Response
     {
-
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);

@@ -28,25 +28,24 @@
                     <hr>
 
                     <article class="article">
-                        <h3>@{article.title}</h3>
-                        <h5>@{article.subtitle}</h5>
+                        <h3 class="h3">@{article.title}</h3>
+                        <h4 class="h4">@{article.subtitle}</h4>
                         <div class="metadate">Ecrit le
-                            TODO: date good format
                             @{article.creation_date.date }
                             à
                             @{article.creation_date.time }
-                            dans la categorie:
-                            @{article.category_name}</div>
-                        <div class="row">
-                            <div class="col-md-4">
+                        </div>
+                        <div class="font-weight-bold">
+                            @{article.category_name.toUpperCase()}
+                        </div>
+                        <div>
+                            <div class="flex">
                                 <img :src='article.picture_path' style="width:200px;height:130px;">
+                                <div>@{article.content}</div>
                             </div>
-                            <div class="col-md-8">
-                                @{article.content}
-                                {#TODO: how to make path #}
+                            <div>
 
-                                {#<a href="{{path('article_show', {'id':  )}}" class="btn btn-outline-info">... Détail</a>#}
-
+                                <div><a :href="'/article/' + article.id" class="border-2 border-black p-2 m-4 bg-blue-500">... Détail</a></div>
                             </div>
                         </div>
                     </article>
