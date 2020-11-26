@@ -4,7 +4,7 @@
 Class diagramm and other additional files are in [/public/report_files/](https://github.com/ThanhMary/fjt_blog/tree/main/public/report_files)
 
 # init project
-Fisrt clone repo + vhost + create bdd(.env)
+First clone repo + vhost + create bdd(.env)
 /!\Should have the last version of node or at least a 12.0 or more
 ```bash
 composer install && npm install && php bin/console make:migration && php bin/console doctrine:migration:migrate && php bin/console doctrine:fixtures:load && npm run build
