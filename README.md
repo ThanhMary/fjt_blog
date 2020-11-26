@@ -14,10 +14,10 @@ Class diagramm and other additional files are in [/public/report_files/](https:/
 
 | Without account                                 |      User     |        Admin  |
 | -------------                                 | ------------- |------------- |
-| [/](http://blog.com) | [/profile](http://blog.com/profile) |[/article/new](http://blog.com/article/new) |
+| [/](http://blog.com/) | [/profile](http://blog.com/profile) |[/article/new](http://blog.com/article/new) |
 | [/propos](http://blog.com/propos) |[/profile/liked_articles](http://blog.com/profile/liked_articles) |[/article/](http://blog.com/article) |
-| [/contact/new](http://blog.com/contact/new) |  | [/contact/](http://blog.com/contact) |
-| [/login](http://blog.com/login) |  | 
+| [/contact/new](http://blog.com/contact/new) | [/profile/shared_articles](http://blog.com/profile/shared_article) | [/contact/](http://blog.com/contact) |
+| [/login](http://blog.com/login) | [/profile/comment_articles](http://blog.com/profile/comment_articles) | |
 
 ## Steps to reproduce :
 
@@ -26,7 +26,6 @@ Test pages without connecting
 
 - 2 )
 Test pages by connecting with user account
-- Access profile => See articles liked with filters
 
 - 3 )
-Test pages by connecting to teh admin
+Test pages by connecting to the admin
