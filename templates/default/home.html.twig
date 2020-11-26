@@ -10,11 +10,11 @@
 				<h3 style="color: white;">Recherche</h3>
 
 				{# 
-																																										{{ form_start(form, {attr: {class: 'filter js-filter-form'}}) }} 
-																																										<div class="spinner-border js-loading" role="status" aria-hidden="true" style="display: none">
-																																										<button type="submit" class="btn btn-primary w-100">Filtrer</button>
-																																										{{ form_end(form) }} 
-																																								#}
+																																														{{ form_start(form, {attr: {class: 'filter js-filter-form'}}) }} 
+																																														<div class="spinner-border js-loading" role="status" aria-hidden="true" style="display: none">
+																																														<button type="submit" class="btn btn-primary w-100">Filtrer</button>
+																																														{{ form_end(form) }} 
+																																												#}
 			</div>
 
 			<div class="col-9" style='border: 5px; padding: 20px; background-color: #D5F5E3;'>
@@ -24,8 +24,8 @@
 						<article>
 
 							{#{% if article.id in user_article  %}
-																					<a class="link" href="{{path('article_edit', {'id': article.id})}}">
-																					{% else %}#}
+																												<a class="link" href="{{path('article_edit', {'id': article.id})}}">
+																												{% else %}#}
 							<a
 								class="link" href="{{path('article_show', {'id': article.id})}}">
 								{#{% endif %}#}
@@ -42,7 +42,7 @@
 									{% endif %}
 									à
 									{{article.creationDate | date('H:i')}}, 
-																																																																																																																																																																																																																			                Categorie:
+																																																																																																																																																																																																																												                Categorie:
 									{{article.category.name}}
 								</div>
 								<div class="row">
@@ -60,64 +60,68 @@
 									<div onclick="interact({{article.id}} , {{ app.user != null? app.user.id : 'null' }} , 0 , this )" class="social" ">
 										<span class="social_tag">
 
-											{{ article.interactions |filter(v => v.interactionType == 0 )|length }}
-											{# an error with   constant('App\\Entity\\Article::LIKE')) |length  }}     #}
+											<div onclick="interact({{article.id}} , {{ app.user != null? app.user.id : 'null' }} , 0 , this )" class="social" ">
+												<span class="social_tag">
 
-										</span>
-										<svg class="social_icon">
-											<use xlink:href="#like"></use>
-										</svg>
+													{{ article.interactions |filter(v => v.interactionType == 0 )|length }}
+													{# an error with   constant('App\\Entity\\Article::LIKE')) |length  }}     #}
+
+												</span>
+												<svg class="social_icon">
+													<use xlink:href="#like"></use>
+												</svg>
+											</div>
+											<div onclick="interact({{article.id}} , {{ app.user != null? app.user.id : 'null' }} , 1 ,this )" class="social">
+												<span class="social_tag">
+													{{ article.interactions |filter(v => v.interactionType == 1 )|length }}
+													{# an error with   constant('App\\Entity\\Article::LIKE')) |length  }}     #}
+												</span>
+												<svg class="social_icon">
+													<use xlink:href="#comment"></use>
+												</svg>
+											</div>
+										</div>
+
+									</article>
+								{% endfor %}
+
+							</section>
+
+							<hr>
+							{# <div class="pagination float-center"> 
+																																																																		 {{knp_pagination_render(articles)}}
+																																																																		</div> #}
+						</div>
+						<div id="myModal" class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
 									</div>
-									<div onclick="interact({{article.id}} , {{ app.user != null? app.user.id : 'null' }} , 1 ,this )" class="social">
-										<span class="social_tag">
-											{{ article.interactions |filter(v => v.interactionType == 1 )|length }}
-											{# an error with   constant('App\\Entity\\Article::LIKE')) |length  }}     #}
-										</span>
-										<svg class="social_icon">
-											<use xlink:href="#comment"></use>
-										</svg>
+									<div class="modal-body">
+										<div class="row w-100 d-flex flex-column">
+											<div class="col-12">
+												<img class="w-100" src="{{ asset('images/social.jpg') }}" alt="Symfony!"/>
+											</div>
+											<div class="">
+												vous êtes nouveaux parmis nous rejoignez nous via les bouton ci-dessous
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button class="btn btn-secondary" data-dismiss="modal">Close</button>
+										<a href="{{path('app_login')}}" class="btn btn-primary">Se connectez</a>
+										<a href="#" class="btn btn-primary">Nous Rejoindre</a>
 									</div>
 								</div>
-
-							</article>
-						{% endfor %}
-
-					</section>
-
-					<hr>
-					{# <div class="pagination float-center"> 
-																																																											 {{knp_pagination_render(articles)}}
-																																																											</div> #}
-				</div>
-				<div id="myModal" class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<div class="row w-100 d-flex flex-column">
-									<div class="col-12">
-										<img class="w-100" src="{{ asset('images/social.jpg') }}" alt="Symfony!"/>
-									</div>
-									<div class="">
-										vous êtes nouveaux parmis nous rejoignez nous via les bouton ci-dessous
-									</div>
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button class="btn btn-secondary" data-dismiss="modal">Close</button>
-								<a href="{{path('app_login')}}" class="btn btn-primary">Se connectez</a>
-								<a href="#" class="btn btn-primary">Nous Rejoindre</a>
 							</div>
 						</div>
 					</div>
-				</div>
-				<script>
-					async function interact(article_id, user_id, interactionType, element) {
+					<script>
+						async function interact(article_id, user_id, interactionType, element) {
 
 console.log(element);
 number = Number.parseInt(element.children[0].innerText);
@@ -148,6 +152,37 @@ $("#myModal").modal()
 }
 
 }
+					</script>
+
+					console.log(element);
+					number = Number.parseInt(element.children[0].innerText);
+					
+					var url = Routing.generate('article_interact', {'id': article_id});
+					
+					let content = {
+					user: user_id,
+					interact_type: interactionType
+					};
+					
+					if (user_id != null) {
+					
+					let response = await fetch(url, {
+					method: "POST",
+					body: JSON.stringify(content)
+					});
+					
+					liked = await response.json();
+					if (liked['action'] == 'add' && liked['state'] == true) {
+					number += 1;
+					} else if (liked['action'] == 'remove' && liked['state'] == true) {
+					number -= 1;
+					}
+					element.children[0].innerText = number;
+					} else {
+					$("#myModal").modal()
+					}
+					
+					}
 				</script>
 
 			</div>

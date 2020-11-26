@@ -12,11 +12,11 @@
                 <td>{{ contact.id }}</td>
             </tr>
             <tr>
-                <th>firstName</th>
+                <th>Prénom</th>
                 <td>{{ contact.firstName }}</td>
             </tr>
             <tr>
-                <th>LastName</th>
+                <th>Nom</th>
                 <td>{{ contact.lastName }}</td>
             </tr>
             <tr>
@@ -24,7 +24,7 @@
                 <td>{{ contact.email }}</td>
             </tr>
             <tr>
-                <th>Telephone</th>
+                <th>Téléphone</th>
                 <td>{{ contact.telephone }}</td>
             </tr>
             <tr>
@@ -34,9 +34,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('contact_index') }}">back to list</a> ||
-    <a href="{{ path('contact_edit', {'id': contact.id}) }}">edit</a> || 
+    <a href="{{ path('contact_index') }}">retour à la liste</a> ||
+    <a href="{{ path('contact_edit', {'id': contact.id}) }}">éditer</a> || 
     {{ include('contact/_delete_form.html.twig') }}
 
-    
+
 {% endblock %}
